@@ -20,7 +20,7 @@ public class Grupo {
     @ManyToOne
     @JoinTable(name = "equipos")
     @JoinColumn(name = "id_equipo")
-    private Equipo equipo;
+    private Team equipo;
     
     @Column(name = "grupo")
     private String nombreGrupo;
@@ -33,67 +33,5 @@ public class Grupo {
 
     @Column(name = "goles_contra")
     private int golesContra;
-
-    public Grupo(Equipo equipo, String nombreGrupo) {
-        this.equipo = equipo;
-        this.nombreGrupo = nombreGrupo;
-        this.puntos = 0;
-        this.golesContra = 0;
-        this.golesFavor = 0;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Equipo getEquipo() {
-        return equipo;
-    }
-
-    public void setEquipo(Equipo equipo) {
-        this.equipo = equipo;
-    }
-    
-    public String getNombreGrupo() {
-        return nombreGrupo;
-    }
-
-    public void setNombreGrupo(String nombreGrupo) {
-        this.nombreGrupo = nombreGrupo;
-    }
-    
-    public int getPuntos() {
-        return puntos;
-    }
-
-    public void setPuntos(int puntos) {
-        this.puntos = puntos;
-    }
-
-    public int getGolesFavor() {
-        return golesFavor;
-    }
-
-    public void setGolesFavor(int golesFavor) {
-        this.golesFavor = golesFavor;
-    }
-
-    public int getGolesContra() {
-        return golesContra;
-    }
-
-    public void setGolesContra(int golesContra) {
-        this.golesContra = golesContra;
-    }
-
-    @Override
-    public String toString() {
-        return "Grupo [id=" + id + ", equipo=" + equipo + ", nombreGrupo=" + nombreGrupo + ", puntos=" + puntos
-                + ", golesFavor=" + golesFavor + ", golesContra=" + golesContra + "]";
-    }
     
 }
