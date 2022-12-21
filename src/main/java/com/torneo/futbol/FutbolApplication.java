@@ -19,13 +19,6 @@ public class FutbolApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FutbolApplication.class, args);
-
-		Team team = new Team(1L,"VCF");
-
-		Player player = new Player(null, team, "Antonio Alcañiz", "delantero", 2, 2, 2, 2, 1);
-
-		log.info(player.toString());
-		
 	}
 
 }

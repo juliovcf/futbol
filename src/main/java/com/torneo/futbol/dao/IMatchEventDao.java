@@ -3,11 +3,12 @@ package com.torneo.futbol.dao;
 import java.util.Collection;
 
 import com.torneo.futbol.model.MatchEvent;
-import org.springframework.data.repository.CrudRepository;
 
-public interface IMatchEventDao extends CrudRepository<MatchEvent, Long>{
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface IMatchEventDao extends JpaRepository<MatchEvent, Long>{
     
-    public MatchEvent get(Long id);
+    public MatchEvent getByID(Long id);
 
     public Collection<MatchEvent> getByMatchID(Collection<Long> id );
 
