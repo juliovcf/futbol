@@ -1,5 +1,6 @@
 package com.torneo.futbol.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,35 +8,45 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
 @Entity
-
+@Table
 public class Player {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinTable(name = "team")
-    @JoinColumn(name = "id_team")
+    @JoinTable(name = "teams")
+    @JoinColumn(name = "team_id")
     private Team team;
     
-    private String nombre;
+    @Column(nullable = false, length = 65)
+    private String name;
 
-    private String posicion;
+    @Column(length = 65)
+    private String position;
 
-    private Integer dorsal;
+    @Column(nullable = false, length = 2)
+    private Integer number;
 
-    private Integer calidad;
+    @Column(nullable = false, length = 2)
+    private Integer level;
 
-    private Integer goles;
+    @Column(length = 3)
+    private Integer goals;
 
-    private Integer amarillas;
+    @Column(length = 3)
+    private Integer yellowCards;
 
-    private Integer rojas;
+    @Column(length = 3)
+    private Integer redCards;
 
 }
