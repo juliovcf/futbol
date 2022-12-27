@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-public interface IMatchEventController {
+public interface MatchEventController {
     
     @GetMapping("/{id}")
     public ResponseEntity<MatchEvent> get(@PathVariable(required = true) Long id);

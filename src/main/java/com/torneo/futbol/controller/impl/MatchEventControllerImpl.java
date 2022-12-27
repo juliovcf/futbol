@@ -3,17 +3,21 @@ package com.torneo.futbol.controller.impl;
 import java.util.Collection;
 import java.util.List;
 
-import com.torneo.futbol.controller.IMatchEventController;
-import com.torneo.futbol.dao.IMatchEventDao;
+import com.torneo.futbol.controller.MatchEventController;
 import com.torneo.futbol.model.MatchEvent;
+import com.torneo.futbol.service.impl.MatchEventService;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
-public class MatchEventController implements IMatchEventController {
+@RestController
+public class MatchEventControllerImpl implements MatchEventController {
+
+    private MatchEventService matchEventService;
 
     @Override
     public ResponseEntity<MatchEvent> get(Long id) {
-        MatchEvent event = IMatchEventDao.findById(id);
+        MatchEvent event = matchEventService.get(id);
         if (event != null) {
             return ResponseEntity.ok(event);
         } else {

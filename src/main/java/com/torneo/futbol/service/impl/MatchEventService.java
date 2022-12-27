@@ -1,10 +1,8 @@
 package com.torneo.futbol.service.impl;
 
 import java.util.Collection;
-import java.util.Optional;
-
-import com.torneo.futbol.dao.IMatchEventDao;
 import com.torneo.futbol.model.MatchEvent;
+import com.torneo.futbol.repository.MatchEventRepository;
 import com.torneo.futbol.service.IMatchEventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +12,12 @@ import org.springframework.stereotype.Service;
 public class MatchEventService implements IMatchEventService{
 
     @Autowired
-    private IMatchEventDao matchEventDao;
+    private MatchEventRepository matchEventRepository;
 
     @Override
     public MatchEvent get(Long id) {
         
-        return matchEventDao.findById(id).get();
+        return null;
     }
 
     @Override

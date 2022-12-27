@@ -24,21 +24,21 @@ public class Player {
     private Long id;
 
     @ManyToOne
-    @JoinTable(name = "teams")
-    @JoinColumn(name = "team_id")
+    @JoinTable(name = "team")
+    @JoinColumn(name = "team_id", nullable = false)
     private Team team;
     
     @Column(nullable = false, length = 65)
     private String name;
+
+    @Column(nullable = false)
+    private String surname;
 
     @Column(length = 65)
     private String position;
 
     @Column(nullable = false, length = 2)
     private Integer number;
-
-    @Column(nullable = false, length = 2)
-    private Integer level;
 
     @Column(length = 3)
     private Integer goals;

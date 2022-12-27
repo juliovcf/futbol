@@ -1,6 +1,5 @@
-package com.torneo.futbol.dao.impl;
+package com.torneo.futbol.repository.impl;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -10,12 +9,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
+import org.springframework.stereotype.Repository;
 
-import com.torneo.futbol.dao.IMatchEventDao;
 import com.torneo.futbol.model.MatchEvent;
 import com.torneo.futbol.repository.MatchEventRepository;
 
-public class MatchEventDao implements IMatchEventDao{
+@Repository
+public class MatchEventRepositoryImpl implements MatchEventRepository{
 
     @Override
     public void deleteAllByIdInBatch(Iterable<Long> ids) {
@@ -73,6 +73,7 @@ public class MatchEventDao implements IMatchEventDao{
 
     @Override
     public MatchEvent getById(Long id) {
+        // TODO Auto-generated method stub
         return null;
     }
 
@@ -153,7 +154,13 @@ public class MatchEventDao implements IMatchEventDao{
         // TODO Auto-generated method stub
         return false;
     }
-    
+
+    @Override
+    public Optional<MatchEvent> findById(Long id) {
+        // TODO Auto-generated method stub
+        return Optional.empty();
+    }
+
     @Override
     public <S extends MatchEvent> S save(S entity) {
         // TODO Auto-generated method stub
@@ -189,23 +196,5 @@ public class MatchEventDao implements IMatchEventDao{
         // TODO Auto-generated method stub
         return Optional.empty();
     }
-
-    @Override
-    public Collection<MatchEvent> getByMatchID(Collection<Long> id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Collection<MatchEvent> get(Collection<Long> id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Optional<MatchEvent> findById(Long id) {
-        // TODO Auto-generated method stub
-        return Optional.empty();
-    }
-    
+   
 }

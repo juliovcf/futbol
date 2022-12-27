@@ -1,15 +1,8 @@
 package com.torneo.futbol.repository;
 
-import org.springframework.stereotype.Repository;
-
+import org.springframework.data.jpa.repository.JpaRepository;
 import com.torneo.futbol.model.MatchEvent;
 
-@Repository
-public interface MatchEventRepository {
-
-    public static  MatchEvent findById(Long id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+public interface MatchEventRepository  extends JpaRepository<MatchEvent, Long>{
     
 }
