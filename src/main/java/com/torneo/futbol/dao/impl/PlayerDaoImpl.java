@@ -1,6 +1,5 @@
 package com.torneo.futbol.dao.impl;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -11,11 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 
-import com.torneo.futbol.dao.IMatchEventDao;
-import com.torneo.futbol.model.MatchEvent;
-import com.torneo.futbol.repository.MatchEventRepository;
+import com.torneo.futbol.dao.PlayerDao;
+import com.torneo.futbol.model.Player;
 
-public class MatchEventDao implements IMatchEventDao{
+public class PlayerDaoImpl implements PlayerDao{
 
     @Override
     public void deleteAllByIdInBatch(Iterable<Long> ids) {
@@ -30,37 +28,37 @@ public class MatchEventDao implements IMatchEventDao{
     }
 
     @Override
-    public void deleteAllInBatch(Iterable<MatchEvent> entities) {
+    public void deleteAllInBatch(Iterable<Player> entities) {
         // TODO Auto-generated method stub
         
     }
 
     @Override
-    public List<MatchEvent> findAll() {
+    public List<Player> findAll() {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public List<MatchEvent> findAll(Sort sort) {
+    public List<Player> findAll(Sort sort) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public <S extends MatchEvent> List<S> findAll(Example<S> example) {
+    public <S extends Player> List<S> findAll(Example<S> example) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public <S extends MatchEvent> List<S> findAll(Example<S> example, Sort sort) {
+    public <S extends Player> List<S> findAll(Example<S> example, Sort sort) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public List<MatchEvent> findAllById(Iterable<Long> ids) {
+    public List<Player> findAllById(Iterable<Long> ids) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -72,42 +70,43 @@ public class MatchEventDao implements IMatchEventDao{
     }
 
     @Override
-    public MatchEvent getById(Long id) {
-        return null;
-    }
-
-    @Override
-    public MatchEvent getOne(Long id) {
+    public Player getById(Long id) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public MatchEvent getReferenceById(Long id) {
+    public Player getOne(Long id) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public <S extends MatchEvent> List<S> saveAll(Iterable<S> entities) {
+    public Player getReferenceById(Long id) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public <S extends MatchEvent> List<S> saveAllAndFlush(Iterable<S> entities) {
+    public <S extends Player> List<S> saveAll(Iterable<S> entities) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public <S extends MatchEvent> S saveAndFlush(S entity) {
+    public <S extends Player> List<S> saveAllAndFlush(Iterable<S> entities) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Page<MatchEvent> findAll(Pageable pageable) {
+    public <S extends Player> S saveAndFlush(S entity) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Page<Player> findAll(Pageable pageable) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -119,7 +118,7 @@ public class MatchEventDao implements IMatchEventDao{
     }
 
     @Override
-    public void delete(MatchEvent entity) {
+    public void delete(Player entity) {
         // TODO Auto-generated method stub
         
     }
@@ -131,7 +130,7 @@ public class MatchEventDao implements IMatchEventDao{
     }
 
     @Override
-    public void deleteAll(Iterable<? extends MatchEvent> entities) {
+    public void deleteAll(Iterable<? extends Player> entities) {
         // TODO Auto-generated method stub
         
     }
@@ -153,59 +152,48 @@ public class MatchEventDao implements IMatchEventDao{
         // TODO Auto-generated method stub
         return false;
     }
-    
+
     @Override
-    public <S extends MatchEvent> S save(S entity) {
+    public Optional<Player> findById(Long id) {
+        // TODO Auto-generated method stub
+        return Optional.empty();
+    }
+
+    @Override
+    public <S extends Player> S save(S entity) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public <S extends MatchEvent> long count(Example<S> example) {
+    public <S extends Player> long count(Example<S> example) {
         // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
-    public <S extends MatchEvent> boolean exists(Example<S> example) {
+    public <S extends Player> boolean exists(Example<S> example) {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public <S extends MatchEvent> Page<S> findAll(Example<S> example, Pageable pageable) {
+    public <S extends Player> Page<S> findAll(Example<S> example, Pageable pageable) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public <S extends MatchEvent, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction) {
+    public <S extends Player, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public <S extends MatchEvent> Optional<S> findOne(Example<S> example) {
+    public <S extends Player> Optional<S> findOne(Example<S> example) {
         // TODO Auto-generated method stub
         return Optional.empty();
     }
 
-    @Override
-    public Collection<MatchEvent> getByMatchID(Collection<Long> id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Collection<MatchEvent> get(Collection<Long> id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Optional<MatchEvent> findById(Long id) {
-        // TODO Auto-generated method stub
-        return Optional.empty();
-    }
     
 }

@@ -2,14 +2,20 @@ package com.torneo.futbol.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import com.torneo.futbol.model.Team;
 
+
 public interface TeamController {
-    List<Team> findAll();
 
-    Team findById(Long id);
+    ResponseEntity<Team> createTeam(Team team);
 
-    Team save(Team team);
+    ResponseEntity<List<Team>> getTeams();
 
-    void delete(Team team);    
+    ResponseEntity<Team> getTeamById(Long id);
+
+    ResponseEntity<Team> updateTeam(Long id, Team team);
+
+    ResponseEntity<Void> deleteTeam(Long id);
+
 }

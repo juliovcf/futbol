@@ -12,7 +12,7 @@ import com.torneo.futbol.model.Player;
 import com.torneo.futbol.service.PlayerService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/players")
 public class PlayerControllerImpl implements PlayerController{
 
     @Autowired

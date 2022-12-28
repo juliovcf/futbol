@@ -25,7 +25,7 @@ public class Team {
     @Column(nullable = false, length = 25)
     private String name;
 
-    @Column(nullable = false, length = 2)
+    @Column(nullable = false, length = 3)
     private Integer quality;
 
     @OneToMany(mappedBy = "team")

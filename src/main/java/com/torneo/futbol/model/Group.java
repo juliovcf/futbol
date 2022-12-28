@@ -8,28 +8,33 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data  
 @Entity
+@Table(name = "group")
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinTable(name = "equipos")
-    @JoinColumn(name = "id_equipo")
+    @JoinTable(name = "team")
+    @JoinColumn(name = "team_id", nullable = false)
     private Team team;
     
-    @Column(name = "groupName")
+    @Column(name = "group_Name", nullable = false)
     private String groupName;
 
     @Column(name = "points")
-    private int points;
+    private Integer points;
    
-    @Column(name = "goles_favor")
-    private int goalsScored;
+    @Column(name = "goals_Scored")
+    private Integer goalsScored;
 
-    @Column(name = "goles_contra")
-    private int goalsAgainst;
+    @Column(name = "goals_Against")
+    private Integer goalsAgainst;
 
 }

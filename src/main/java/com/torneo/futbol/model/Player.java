@@ -28,16 +28,15 @@ public class Player {
     @JoinColumn(name = "team_id", nullable = false)
     private Team team;
     
-    @Column(nullable = false, length = 65)
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String surname;
 
-    @Column(length = 65)
     private String position;
 
-    @Column(nullable = false, length = 2)
+    @Column(length = 2)
     private Integer number;
 
     @Column(length = 3)

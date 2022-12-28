@@ -14,7 +14,12 @@ public class TeamsServiceImpl implements TeamService{
 
     @Autowired
     private TeamRepository teamRepository;
-    
+
+    @Override
+    public Team create(Team team) {
+        return teamRepository.save(team);
+    }
+
     @Override
     public List<Team> findAll() {
         return teamRepository.findAll();
@@ -26,13 +31,14 @@ public class TeamsServiceImpl implements TeamService{
     }
 
     @Override
-    public Team save(Team team) {
+    public Team update(Long id, Team team) {
+        team.setId(id);
         return teamRepository.save(team);
     }
 
     @Override
-    public void delete(Team team) {
-        teamRepository.delete(team);
+    public void delete(Long id) {
+        teamRepository.deleteById(id);
     }
     
 }
