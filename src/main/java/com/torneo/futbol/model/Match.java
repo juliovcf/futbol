@@ -25,17 +25,13 @@ public class Match {
 
     private Date date;
 
-    /*@ManyToOne
-    @JoinTable(name = "team")
-    @JoinColumn(name = "id_team")
-    private Team homeTeam;*/
+    @ManyToOne
+    private Team homeTeam;
 
     private String goalsHome;
 
-    /*@ManyToOne
-    @JoinTable(name = "team")
-    @JoinColumn(name = "id_team")
-    private Team awayTeam;*/
+    @ManyToOne
+    private Team awayTeam;
 
     private String goalsAway;   
 }

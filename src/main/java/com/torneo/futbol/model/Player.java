@@ -23,10 +23,8 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   /* @ManyToOne
-    @JoinTable(name = "team")
-    @JoinColumn(name = "team_id", nullable = false)
-    private Team team;*/
+    @ManyToOne(optional = false)
+    private Team team;
     
     @Column(nullable = false)
     private String name;

@@ -27,21 +27,17 @@ public class MatchEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /*@ManyToOne
-    @JoinColumn(name = "match_id", nullable = false)
+    @ManyToOne(optional = false)
     private Match match;
 
-    @ManyToOne
-    @JoinColumn(name = "player_id", nullable = false)
+    @ManyToOne(optional = false)
     private Player player;
 
-    @ManyToOne
-    @JoinColumn(name = "team_id", nullable = false)
+    @ManyToOne(optional = false)
     private Team team;
 
-    @ManyToOne
-    @JoinColumn(name = "event_type_id", nullable = false)
-    private MatchEventType eventType;*/
+    @ManyToOne(optional = false)
+    private MatchEventType eventType;
 
     @Column(name = "minute", nullable = false)
     private Integer minute;

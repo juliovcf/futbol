@@ -1,7 +1,9 @@
 package com.torneo.futbol.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,10 +22,8 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /*@ManyToOne
-    @JoinTable(name = "team")
-    @JoinColumn(name = "team_id", nullable = false)
-    private Team team;*/
+    @ManyToOne(optional = false)
+    private Team team;
     
     @Column(name = "groupname", nullable = false)
     private String groupName;
