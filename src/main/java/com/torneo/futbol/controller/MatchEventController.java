@@ -1,4 +1,4 @@
-package com.torneo.futbol.controller;
+/*package com.torneo.futbol.controller;
 
 import java.util.Collection;
 import java.util.List;
@@ -22,3 +22,4 @@ public interface MatchEventController {
     public ResponseEntity<List<MatchEvent>> get(@RequestParam(required = false) Collection<Long> lId);
 
 }
+*/

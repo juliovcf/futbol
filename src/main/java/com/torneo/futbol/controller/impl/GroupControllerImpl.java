@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.torneo.futbol.controller.GroupController;
+/*import com.torneo.futbol.controller.GroupController;
 import com.torneo.futbol.model.Group;
 import com.torneo.futbol.service.GroupService;
 
@@ -57,3 +57,4 @@ public class GroupControllerImpl implements GroupController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }    
+*/

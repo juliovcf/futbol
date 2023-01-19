@@ -1,4 +1,4 @@
-package com.torneo.futbol.controller.impl;
+/*package com.torneo.futbol.controller.impl;
 
 import java.util.Collection;
 import java.util.List;
@@ -8,9 +8,11 @@ import com.torneo.futbol.model.MatchEvent;
 import com.torneo.futbol.service.impl.MatchEventService;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/matchEvents")
 public class MatchEventControllerImpl implements MatchEventController {
 
     private MatchEventService matchEventService;
@@ -38,4 +40,4 @@ public class MatchEventControllerImpl implements MatchEventController {
     }
 
     
-}
+}*/

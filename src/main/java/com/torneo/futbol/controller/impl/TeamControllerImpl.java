@@ -18,40 +18,24 @@ import com.torneo.futbol.model.Team;
 import com.torneo.futbol.service.TeamService;
 
 @RestController
-@RequestMapping("/api/teams")
-public class TeamControllerImpl implements TeamController{
+public class TeamControllerImpl implements TeamController {
 
     @Autowired
     private TeamService teamService;
-    
-    @GetMapping
-    @Override
-    public ResponseEntity<List<Team>> getTeams() {
-        return ResponseEntity.ok(teamService.findAll());
-    }
-
-    @GetMapping("/{id}")
-    @Transactional(readOnly = true)
-    public ResponseEntity<Team> getTeamById(@PathVariable Long id) {
-        return ResponseEntity.ok(teamService.findById(id));
-    }    
 
     @Override
-    @PostMapping
-    public ResponseEntity<Team> createTeam(Team team) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(teamService.create(team));
+    public List<Team> getAllTeams() {
+        return teamService.findAll();
     }
 
     @Override
-    public ResponseEntity<Team> updateTeam(Long id, Team team) {
-        return ResponseEntity.ok(teamService.update(id, team));
+    public Team getTeamById(Long id) {
+        return teamService.findById(id);
     }
 
     @Override
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTeam(@PathVariable Long id) {
-        teamService.delete(id);
-        return ResponseEntity.noContent().build();
+    public void addTeam(Team team) {
+        teamService.create(team);
     }
-    
+
 }

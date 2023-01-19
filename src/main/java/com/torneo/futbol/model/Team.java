@@ -28,7 +28,4 @@ public class Team {
     @Column(nullable = false, length = 3)
     private Integer quality;
 
-   /* @OneToMany(mappedBy = "player")
-    private List<Player> players;*/
-
 }
