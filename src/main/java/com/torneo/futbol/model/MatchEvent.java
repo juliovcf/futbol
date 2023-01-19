@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table (name = "matchEvent")
+@Table
 public class MatchEvent {
     public MatchEvent(MatchEvent eventType) {
         
@@ -27,21 +27,21 @@ public class MatchEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "match_id", nullable = false)
-    private Match matchId;
+    private Match match;
 
     @ManyToOne
     @JoinColumn(name = "player_id", nullable = false)
-    private Player playerId;
+    private Player player;
 
     @ManyToOne
     @JoinColumn(name = "team_id", nullable = false)
-    private Team teamId;
+    private Team team;
 
     @ManyToOne
     @JoinColumn(name = "event_type_id", nullable = false)
-    private MatchEventType eventTypeId;
+    private MatchEventType eventType;*/
 
     @Column(name = "minute", nullable = false)
     private Integer minute;

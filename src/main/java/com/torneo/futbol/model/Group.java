@@ -14,16 +14,16 @@ import lombok.Data;
 
 @Data  
 @Entity
-@Table(name = "group")
+@Table(name = "\"group\"")
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinTable(name = "team")
     @JoinColumn(name = "team_id", nullable = false)
-    private Team team;
+    private Team team;*/
     
     @Column(name = "groupname", nullable = false)
     private String groupName;

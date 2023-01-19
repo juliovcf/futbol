@@ -16,7 +16,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Entity
-@Table (name = "team")
+@Table
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class Team {
     @Column(nullable = false, length = 3)
     private Integer quality;
 
-    @OneToMany(mappedBy = "player")
-    private List<Player> players;
+   /* @OneToMany(mappedBy = "player")
+    private List<Player> players;*/
 
 }

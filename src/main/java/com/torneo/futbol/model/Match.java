@@ -17,7 +17,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Entity
-@Table (name = "match")
+@Table
 public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,17 +25,17 @@ public class Match {
 
     private Date date;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinTable(name = "team")
     @JoinColumn(name = "id_team")
-    private Team homeTeam;
+    private Team homeTeam;*/
 
     private String goalsHome;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinTable(name = "team")
     @JoinColumn(name = "id_team")
-    private Team awayTeam;
+    private Team awayTeam;*/
 
     private String goalsAway;   
 }

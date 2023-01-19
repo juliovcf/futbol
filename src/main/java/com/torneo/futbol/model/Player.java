@@ -23,10 +23,10 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+   /* @ManyToOne
     @JoinTable(name = "team")
     @JoinColumn(name = "team_id", nullable = false)
-    private Team team;
+    private Team team;*/
     
     @Column(nullable = false)
     private String name;

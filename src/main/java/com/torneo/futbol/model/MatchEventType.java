@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "match_event_types")
+@Table
 public class MatchEventType {
     
     @Id
