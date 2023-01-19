@@ -25,7 +25,7 @@ public class Group {
     @JoinColumn(name = "team_id", nullable = false)
     private Team team;
     
-    @Column(name = "group_Name", nullable = false)
+    @Column(name = "groupname", nullable = false)
     private String groupName;
 
     @Column(name = "points")

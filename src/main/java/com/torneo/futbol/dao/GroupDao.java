@@ -1,9 +1,5 @@
 package com.torneo.futbol.dao;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+public interface GroupDao {
 
-import com.torneo.futbol.model.Group;
-
-public interface GroupDao extends JpaRepository<Group, Long>{
-    
 }
