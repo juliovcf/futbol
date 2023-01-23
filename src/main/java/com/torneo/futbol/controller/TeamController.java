@@ -1,4 +1,4 @@
-package com.torneo.futbol.controller;
+/*package com.torneo.futbol.controller;
 
 import java.util.List;
 
@@ -44,3 +44,4 @@ public interface TeamController {
     void addTeam(@ApiParam(value = "Team object store in database table", required = true) @RequestBody Team team);
 
 }
+*/
