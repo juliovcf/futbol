@@ -3,15 +3,14 @@ package com.torneo.futbol.service.impl;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.torneo.futbol.model.MatchEvent;
-import com.torneo.futbol.model.MatchEventType;
 import com.torneo.futbol.model.Team;
 import com.torneo.futbol.repository.MatchEventRepository;
 import com.torneo.futbol.repository.TeamRepository;
 import com.torneo.futbol.service.MatchService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class MatchServiceImpl implements MatchService {
@@ -66,4 +65,3 @@ public class MatchServiceImpl implements MatchService {
         return new MatchEvent(eventType);
     }
 }
-

@@ -17,5 +17,5 @@ public class MatchEventDaoImpl implements MatchEventDao {
     public Collection<MatchEvent> getByMatchId(Long matchId) {
         return null;
     }
-    
+
 }

@@ -2,15 +2,15 @@ package com.torneo.futbol.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.torneo.futbol.model.Team;
 import com.torneo.futbol.repository.TeamRepository;
 import com.torneo.futbol.service.TeamService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 @Service
-public class TeamsServiceImpl implements TeamService{
+public class TeamsServiceImpl implements TeamService {
 
     @Autowired
     private TeamRepository teamRepository;
@@ -40,5 +40,5 @@ public class TeamsServiceImpl implements TeamService{
     public void delete(Long id) {
         teamRepository.deleteById(id);
     }
-    
+
 }

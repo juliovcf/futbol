@@ -5,7 +5,7 @@ import java.util.List;
 import com.torneo.futbol.model.Player;
 
 public interface PlayerService {
-    
+
     List<Player> getAllPlayers();
 
     Player getPlayerById(Long id);
