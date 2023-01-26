@@ -24,10 +24,10 @@
  * } }
  * 
  * @Override public ResponseEntity<List<MatchEvent>> get(Collection<Long> lId) {
- * // TODO Auto-generated method stub return null; }
  * 
- * @Override public ResponseEntity<MatchEvent> getByMatchID(Long id) { // TODO
- * Auto-generated method stub return null; }
+ * 
+ * @Override public ResponseEntity<MatchEvent> getByMatchID(Long id) { 
+ * return null; }
  * 
  * 
  * }

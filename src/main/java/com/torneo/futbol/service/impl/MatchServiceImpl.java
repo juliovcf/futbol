@@ -32,7 +32,7 @@ public class MatchServiceImpl implements MatchService {
 
         int team1Quality = team1.getQuality();
         int team2Quality = team2.getQuality();
-        int totalQuality = team1Quality + team2Quality;
+        //int totalQuality = team1Quality + team2Quality;
 
         for (int i = 0; i < 45; i++) {
             int randomNumber = ThreadLocalRandom.current().nextInt(1, 101);

@@ -1,16 +1,21 @@
 package com.torneo.futbol.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.torneo.futbol.model.Team;
 import com.torneo.futbol.repository.TeamRepository;
 import com.torneo.futbol.service.TeamService;
 
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class TeamsServiceImpl implements TeamService {
+
+    Logger log;
 
     @Autowired
     private TeamRepository teamRepository;
@@ -26,8 +31,9 @@ public class TeamsServiceImpl implements TeamService {
     }
 
     @Override
-    public Team findById(Long id) {
-        return teamRepository.findById(id).orElse(null);
+    public Optional<Team> findById(Long id) {
+        log.info("Lanzando findById");
+        return teamRepository.findById(id);
     }
 
     @Override

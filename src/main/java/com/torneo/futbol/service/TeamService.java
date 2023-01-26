@@ -1,6 +1,7 @@
 package com.torneo.futbol.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.torneo.futbol.model.Team;
 
@@ -10,7 +11,7 @@ public interface TeamService {
 
     List<Team> findAll();
 
-    Team findById(Long id);
+    Optional<Team> findById(Long id);
 
     Team update(Long id, Team team);
 

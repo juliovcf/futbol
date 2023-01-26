@@ -1,6 +1,7 @@
 package com.torneo.futbol.controller.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.torneo.futbol.controller.TeamController;
 import com.torneo.futbol.model.Team;
@@ -21,7 +22,7 @@ public class TeamControllerImpl implements TeamController {
     }
 
     @Override
-    public Team getTeamById(Long id) {
+    public Optional<Team> get(Long id) {
         return teamService.findById(id);
     }
 
