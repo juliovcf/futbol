@@ -1,4 +1,4 @@
-package com.torneo.futbol.controller.impl;
+/*package com.torneo.futbol.controller.impl;
 
 import java.util.Collection;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/*import com.torneo.futbol.controller.GroupController;
+import com.torneo.futbol.controller.GroupController;
 import com.torneo.futbol.model.Group;
 import com.torneo.futbol.service.GroupService;
 
