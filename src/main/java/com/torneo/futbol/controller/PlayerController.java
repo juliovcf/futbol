@@ -1,4 +1,4 @@
-package com.torneo.futbol.controller;
+/*package com.torneo.futbol.controller;
 
 import java.util.List;
 
@@ -29,3 +29,4 @@ public interface PlayerController {
     @DeleteMapping("/players/{id}")
     ResponseEntity<Void> deletePlayer(@PathVariable(required = true) Long id);
 }
+*/

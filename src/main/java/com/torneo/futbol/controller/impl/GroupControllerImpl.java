@@ -1,4 +1,4 @@
-package com.torneo.futbol.controller.impl;
+/*package com.torneo.futbol.controller.impl;
 
 import java.util.Collection;
 import java.util.List;
@@ -57,3 +57,4 @@ public class GroupControllerImpl implements GroupController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }    
+*/

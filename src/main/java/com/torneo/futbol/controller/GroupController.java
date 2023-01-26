@@ -1,4 +1,4 @@
-package com.torneo.futbol.controller;
+/*package com.torneo.futbol.controller;
 
 import java.util.Collection;
 import java.util.List;
@@ -32,3 +32,4 @@ public interface GroupController {
     public ResponseEntity<Void> delete(@PathVariable(required = true) Long id);
 
 }
+*/
