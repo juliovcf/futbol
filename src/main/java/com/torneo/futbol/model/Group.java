@@ -1,20 +1,16 @@
 package com.torneo.futbol.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
 
-@Data  
+@Data
 @Entity
 @Table(name = "\"group\"")
 public class Group {
@@ -24,13 +20,13 @@ public class Group {
 
     @ManyToOne(optional = false)
     private Team team;
-    
+
     @Column(name = "groupname", nullable = false)
     private String groupName;
 
     @Column(name = "points")
     private Integer points;
-   
+
     @Column(name = "goals_Scored")
     private Integer goalsScored;
 

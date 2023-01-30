@@ -5,7 +5,7 @@ import java.util.List;
 import com.torneo.futbol.model.Group;
 
 public interface GroupService {
- 
+
     Group getGroupById(Long id);
 
     List<Group> getAllgroups();

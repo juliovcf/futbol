@@ -2,15 +2,15 @@ package com.torneo.futbol.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.torneo.futbol.model.Player;
 import com.torneo.futbol.repository.PlayerRepository;
 import com.torneo.futbol.service.PlayerService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 @Service
-public class PlayerServiceImpl implements PlayerService{
+public class PlayerServiceImpl implements PlayerService {
 
     @Autowired
     private PlayerRepository playerRepository;
@@ -38,7 +38,7 @@ public class PlayerServiceImpl implements PlayerService{
     @Override
     public void deletePlayer(Long id) {
         playerRepository.deleteById(id);
-        
+
     }
-    
+
 }

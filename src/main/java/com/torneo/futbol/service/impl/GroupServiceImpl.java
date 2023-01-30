@@ -1,15 +1,16 @@
 package com.torneo.futbol.service.impl;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.torneo.futbol.model.Group;
 import com.torneo.futbol.repository.GroupRepository;
 import com.torneo.futbol.service.GroupService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 @Service
-public class GroupServiceImpl  implements GroupService{
+public class GroupServiceImpl implements GroupService {
 
     @Autowired
     private GroupRepository groupRepository;
@@ -37,7 +38,7 @@ public class GroupServiceImpl  implements GroupService{
     @Override
     public void deleteGroupById(Long id) {
         groupRepository.deleteById(id);
-        
+
     }
-    
+
 }
