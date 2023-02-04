@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 
-@Api(value = "Team Management System")
 @RequestMapping("/teams")
 public interface TeamController {
 
