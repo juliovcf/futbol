@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import com.torneo.futbol.dao.TeamDao;
 import com.torneo.futbol.model.Team;
-import com.torneo.futbol.repository.TeamRepository;
 import com.torneo.futbol.service.TeamService;
 
 import org.springframework.beans.factory.annotation.Autowired;

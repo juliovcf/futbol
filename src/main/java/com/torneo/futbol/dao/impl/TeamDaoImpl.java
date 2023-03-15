@@ -3,12 +3,14 @@ package com.torneo.futbol.dao.impl;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.torneo.futbol.dao.TeamDao;
 import com.torneo.futbol.model.Team;
 import com.torneo.futbol.repository.TeamRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class TeamDaoImpl implements TeamDao {
 
     @Autowired

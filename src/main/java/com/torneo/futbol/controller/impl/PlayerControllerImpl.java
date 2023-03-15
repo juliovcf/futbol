@@ -2,14 +2,14 @@ package com.torneo.futbol.controller.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.torneo.futbol.controller.PlayerController;
+import com.torneo.futbol.dto.CreatePlayerDTO;
 import com.torneo.futbol.model.Player;
 import com.torneo.futbol.service.PlayerService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class PlayerControllerImpl implements PlayerController {
@@ -18,13 +18,13 @@ public class PlayerControllerImpl implements PlayerController {
     private PlayerService playerService;
 
     @Override
-    public ResponseEntity<List<Player>> getAllPlayers() {
-        return ResponseEntity.ok(playerService.getAllPlayers());
+    public ResponseEntity<List<Player>> getAll() {
+        return ResponseEntity.ok(playerService.getAll());
     }
 
     @Override
-    public ResponseEntity<Player> getPlayerById(Long id) {
-        Player player = playerService.getPlayerById(id);
+    public ResponseEntity<Player> getById(Long id) {
+        Player player = playerService.getById(id);
         if (player == null) {
             return ResponseEntity.notFound().build();
         }
@@ -32,18 +32,24 @@ public class PlayerControllerImpl implements PlayerController {
     }
 
     @Override
-    public ResponseEntity<Player> addPlayer(Player player) {
-        return ResponseEntity.ok(playerService.addPlayer(player));
+    public ResponseEntity<List<Player>> findPlayersByTeam(Long teamId) {
+        List<Player> players = playerService.findByTeam(teamId);
+        return ResponseEntity.ok(players);
     }
 
     @Override
-    public ResponseEntity<Player> updatePlayer(Long id, Player player) {
-        return ResponseEntity.ok(playerService.addPlayer(player));
+    public ResponseEntity<Player> add(CreatePlayerDTO player) {
+        return ResponseEntity.ok(playerService.create(player));
     }
 
     @Override
-    public ResponseEntity<Void> deletePlayer(Long id) {
-        playerService.deletePlayer(id);
+    public ResponseEntity<Player> update(Long id, Player player) {
+        return ResponseEntity.ok(playerService.update(id, player));
+    }
+
+    @Override
+    public ResponseEntity<Void> delete(Long id) {
+        playerService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
