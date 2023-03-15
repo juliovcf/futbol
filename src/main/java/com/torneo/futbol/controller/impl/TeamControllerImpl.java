@@ -31,4 +31,10 @@ public class TeamControllerImpl implements TeamController {
         teamService.create(team);
     }
 
+    @Override
+    public void deleteTeam(Long id) {
+        teamService.delete(id);
+        
+    }
+
 }
