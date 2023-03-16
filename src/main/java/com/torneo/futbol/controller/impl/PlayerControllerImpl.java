@@ -3,7 +3,7 @@ package com.torneo.futbol.controller.impl;
 import java.util.List;
 
 import com.torneo.futbol.controller.PlayerController;
-import com.torneo.futbol.dto.CreatePlayerDTO;
+import com.torneo.futbol.dto.PlayerDTO;
 import com.torneo.futbol.model.Player;
 import com.torneo.futbol.service.PlayerService;
 
@@ -38,7 +38,7 @@ public class PlayerControllerImpl implements PlayerController {
     }
 
     @Override
-    public ResponseEntity<Player> add(CreatePlayerDTO player) {
+    public ResponseEntity<Player> add(PlayerDTO player) {
         return ResponseEntity.ok(playerService.create(player));
     }
 

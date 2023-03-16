@@ -1,25 +1,24 @@
-/*
- * package com.torneo.futbol.controller;
- * 
- * import java.util.Collection; import java.util.List;
- * 
- * import com.torneo.futbol.model.MatchEvent;
- * 
- * import org.springframework.http.ResponseEntity; import
- * org.springframework.web.bind.annotation.GetMapping; import
- * org.springframework.web.bind.annotation.PathVariable; import
- * org.springframework.web.bind.annotation.RequestParam;
- * 
- * public interface MatchEventController {
- * 
- * @GetMapping("/{id}") public ResponseEntity<MatchEvent>
- * get(@PathVariable(required = true) Long id);
- * 
- * @GetMapping("/match/{matchID}") public ResponseEntity<MatchEvent>
- * getByMatchID(@PathVariable(required = true) Long id);
- * 
- * @GetMapping public ResponseEntity<List<MatchEvent>>
- * get(@RequestParam(required = false) Collection<Long> lId);
- * 
- * }
- */
+package com.torneo.futbol.controller;
+
+import com.torneo.futbol.model.MatchEvent;
+import java.util.List;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping("/match-events")
+public interface MatchEventController {
+
+    ResponseEntity<List<MatchEvent>> getAll();
+
+    ResponseEntity<MatchEvent> getById(@PathVariable Long id);
+
+    ResponseEntity<MatchEvent> create(@RequestBody MatchEvent matchEvent);
+
+    ResponseEntity<MatchEvent> update(@PathVariable Long id, @RequestBody MatchEvent matchEvent);
+
+    ResponseEntity<Void> delete(@PathVariable Long id);
+
+    ResponseEntity<List<MatchEvent>> getByMatchID(@PathVariable Long matchId);
+}

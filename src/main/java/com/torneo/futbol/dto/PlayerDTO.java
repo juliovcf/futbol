@@ -3,7 +3,7 @@ package com.torneo.futbol.dto;
 import lombok.Data;
 
 @Data
-public class CreatePlayerDTO {
+public class PlayerDTO {
     private Long teamId;
     private String name;
     private String surname;
