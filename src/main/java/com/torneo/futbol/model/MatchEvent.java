@@ -18,10 +18,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table
 public class MatchEvent {
-    public MatchEvent(MatchEvent eventType) {
-
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
