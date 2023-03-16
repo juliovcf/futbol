@@ -2,17 +2,20 @@ package com.torneo.futbol.service;
 
 import java.util.List;
 
+import com.torneo.futbol.dto.CreatePlayerDTO;
 import com.torneo.futbol.model.Player;
 
 public interface PlayerService {
 
-    List<Player> getAllPlayers();
+    List<Player> getAll();
 
-    Player getPlayerById(Long id);
+    Player getById(Long id);
 
-    Player addPlayer(Player player);
+    Player create(CreatePlayerDTO createPlayerDTO);
 
-    Player updatePlayer(Player player);
+    Player update(Long id, Player player);
 
-    void deletePlayer(Long id);
+    void delete(Long id);
+
+    List<Player> findByTeam(Long id);
 }

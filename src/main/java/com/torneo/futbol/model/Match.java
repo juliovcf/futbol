@@ -1,6 +1,6 @@
 package com.torneo.futbol.model;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,9 +11,11 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table
 public class Match {
@@ -21,15 +23,15 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_match;
 
-    private Date date;
+    private LocalDateTime  date;
 
     @ManyToOne
     private Team homeTeam;
 
-    private String goalsHome;
+    private Integer goalsHome;
 
     @ManyToOne
     private Team awayTeam;
 
-    private String goalsAway;
+    private Integer goalsAway;
 }
