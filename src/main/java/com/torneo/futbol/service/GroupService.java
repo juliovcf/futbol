@@ -6,13 +6,13 @@ import com.torneo.futbol.model.Group;
 
 public interface GroupService {
 
-    Group getGroupById(Long id);
+    Group getById(Long id);
 
-    List<Group> getAllgroups();
+    List<Group> getAll();
 
-    Group addGroup(Group group);
+    Group create(Group group);
 
-    Group updateGroup(Group group);
+    Group update(Long id, Group group);
 
-    void deleteGroupById(Long id);
+    void deleteById(Long id);
 }
