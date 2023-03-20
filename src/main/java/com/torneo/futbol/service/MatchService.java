@@ -17,8 +17,6 @@ public interface MatchService {
 
     void delete(Long id);
 
-    void simulateMatch(Long team1Id, Long team2Id);
-
     List<Match> findByDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 
 }

@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_match;
+    private Long id;
 
     private LocalDateTime  date;
 

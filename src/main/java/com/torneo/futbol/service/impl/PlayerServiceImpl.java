@@ -3,7 +3,7 @@ package com.torneo.futbol.service.impl;
 import java.util.List;
 
 import com.torneo.futbol.dao.PlayerDao;
-import com.torneo.futbol.dto.CreatePlayerDTO;
+import com.torneo.futbol.dto.PlayerDTO;
 import com.torneo.futbol.model.Player;
 import com.torneo.futbol.model.Team;
 import com.torneo.futbol.service.PlayerService;
@@ -32,19 +32,19 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Player create(CreatePlayerDTO createPlayerDTO) {
-        Team team = teamService.findById(createPlayerDTO.getTeamId())
+    public Player create(PlayerDTO PlayerDTO) {
+        Team team = teamService.findById(PlayerDTO.getTeamId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid team ID"));
 
         Player player = new Player();
         player.setTeam(team);
-        player.setName(createPlayerDTO.getName());
-        player.setSurname(createPlayerDTO.getSurname());
-        player.setPosition(createPlayerDTO.getPosition());
-        player.setNumber(createPlayerDTO.getNumber());
-        player.setGoals(createPlayerDTO.getGoals());
-        player.setYellowCards(createPlayerDTO.getYellowCards());
-        player.setRedCards(createPlayerDTO.getRedCards());
+        player.setName(PlayerDTO.getName());
+        player.setSurname(PlayerDTO.getSurname());
+        player.setPosition(PlayerDTO.getPosition());
+        player.setNumber(PlayerDTO.getNumber());
+        player.setGoals(PlayerDTO.getGoals());
+        player.setYellowCards(PlayerDTO.getYellowCards());
+        player.setRedCards(PlayerDTO.getRedCards());
 
         return playerDao.create(player);
     }

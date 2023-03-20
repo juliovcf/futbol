@@ -34,7 +34,7 @@ public class MatchDaoImpl implements MatchDao {
 
     @Override
     public Match update(Long id, Match match) {
-        match.setId_match(id);
+        match.setId(id);
         return matchRepository.save(match);
     }
 
