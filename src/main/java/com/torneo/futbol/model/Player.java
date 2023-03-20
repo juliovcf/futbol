@@ -46,4 +46,6 @@ public class Player {
     @Column(length = 3)
     private Integer redCards;
 
+    private boolean available;
+
 }

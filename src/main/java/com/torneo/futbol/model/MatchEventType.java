@@ -22,4 +22,7 @@ public class MatchEventType {
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "name", nullable = false)
+    private double probability;
 }

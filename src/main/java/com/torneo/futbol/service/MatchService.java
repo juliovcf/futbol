@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.torneo.futbol.model.Match;
+import com.torneo.futbol.model.MatchEvent;
+import com.torneo.futbol.model.Team;
 
 public interface MatchService {
 
@@ -18,5 +20,7 @@ public interface MatchService {
     void delete(Long id);
 
     List<Match> findByDateBetween(LocalDateTime startDate, LocalDateTime endDate);
+
+    List<MatchEvent> simulateMatch(Team homeTeam, Team awayTeam, Match match);
 
 }
