@@ -12,6 +12,7 @@ import com.torneo.futbol.model.MatchEvent;
 import com.torneo.futbol.model.MatchEventType;
 import com.torneo.futbol.model.Player;
 import com.torneo.futbol.model.Team;
+import com.torneo.futbol.repository.MatchEventTypeRepository;
 import com.torneo.futbol.service.MatchService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,47 +58,70 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public List<MatchEvent> simulateMatch(Team homeTeam, Team awayTeam, Match match) {
+    public Match simulateMatch(Team homeTeam, Team awayTeam, Match match) {
         List<MatchEvent> events = new ArrayList<>();
         // Simular las dos partes del partido
         events.addAll(simulateHalf(match));
         events.addAll(simulateHalf(match));
 
         // Guardar el resultado en la base de datos
-        //saveMatchResult(match);
+        // saveMatchResult(match);
 
-        return events;
+        return match;
     }
 
     private List<MatchEvent> simulateHalf(Match match) {
         List<MatchEvent> events = new ArrayList<>();
-    
+
         for (int j = 0; j < 45; j++) {
             MatchEvent event = generateRandomEvent(match, j);
             if (event != null) {
                 events.add(event);
+                j += 3;
             }
         }
-    
+
         return events;
     }
-    
 
     private MatchEvent generateRandomEvent(Match match, int minute) {
         Random random = new Random();
         int randomEvent = random.nextInt(100);
-
+        Team team = selectTeam(match);
         // Probabilidad de eventos (ajustar según preferencia)
-    if (randomEvent < 5) { // 5% de probabilidad de gol
-        return generateGoalEvent(match, minute);
-    } else if (randomEvent < 10) { // 5% de probabilidad de corner
-        return generateCornerEvent(match, minute);
-    } else if (randomEvent < 15) { // 15% de probabilidad de falta
-        return generateFoulEvent(match, minute);
-    } 
-    else {
-        return null; // Nada ocurre en esta iteración
+        if (randomEvent < 10) { // 10 de probabilidad de falta
+            return generateFoulEvent(match, minute, team);
+        } else if (randomEvent < 30) { // 20% de probabilidad de ocasion de gol
+            return generateOcasionEvent(match, minute, team);
+        } else {
+            return null; // Nada ocurre en esta iteración
+        }
     }
+
+    private MatchEvent generateOcasionEvent(Match match, int minute, Team team) {
+        Random random = new Random();
+        int randomEvent = random.nextInt(100);
+        // Probabilidad de eventos (ajustar según preferencia)
+        if (randomEvent < 20) { // 20% de probabilidad de corner
+            return generateCornerEvent(match, minute, team);
+        } else if (randomEvent < 50) { // 30% de probabilidad de ocasion de gol
+            return generateGoalEvent(match, minute, team);
+        } else {
+            return null; // Nada ocurre en esta iteración
+        }
+    }
+
+    private MatchEvent generateFoulEvent(Match match, int minute, Team team) {
+        Random random = new Random();
+        int randomEvent = random.nextInt(100);
+        if (randomEvent < 20) { // 10% de probabilidad de tarjeta amarilla
+            return generateYellowCardEvent(match, minute);
+        } else if (randomEvent < 25) { // 5% de probabilidad de tarjeta roja
+            return generateRedCardEvent(match, minute);
+        } else if (randomEvent < 30) { // 5% de probabilidad de lesión
+            return generateInjuryEvent(match, minute);
+        }
+        return null;
     }
 
     private MatchEvent generateInjuryEvent(Match match, int minute) {
@@ -112,39 +136,16 @@ public class MatchServiceImpl implements MatchService {
         return null;
     }
 
-    private MatchEvent generateFoulEvent(Match match, int minute) {
-        Random random = new Random();
-        int randomEvent = random.nextInt(100);
-        if (randomEvent < 35) { // 10% de probabilidad de tarjeta amarilla
-            return generateYellowCardEvent(match, minute);
-        } else if (randomEvent < 41) { // 5% de probabilidad de tarjeta roja
-            return generateRedCardEvent(match, minute);
-        } else if (randomEvent < 46) { // 5% de probabilidad de lesión
-            return generateInjuryEvent(match, minute);
-        }
+    private MatchEvent generateCornerEvent(Match match, int minute, Team team) {
         return null;
     }
 
-    private MatchEvent generateCornerEvent(Match match, int minute) {
-        return null;
-    }
-
-    private MatchEvent generateGoalEvent(Match match, int minute) {
-        Random random = new Random();
-        int totalQuality = match.getHomeTeam().getQuality() + match.getAwayTeam().getQuality();
-        int randomQuality = random.nextInt(totalQuality);
-
+    private MatchEvent generateGoalEvent(Match match, int minute, Team team) {
         MatchEventType goalEventType = null;// Obtener el MatchEventType correspondiente a un gol;
-    
-        if (randomQuality < match.getHomeTeam().getQuality()) {
-            Player scoringPlayer = getRandomPlayer(match.getHomeTeam());
-            match.setGoalsHome(match.getGoalsHome() + 1);
-            return new MatchEvent(match, scoringPlayer, match.getHomeTeam(), goalEventType, minute);
-        } else {
-            Player scoringPlayer = getRandomPlayer(match.getAwayTeam());
-            match.setGoalsAway(match.getGoalsAway() + 1);
-            return new MatchEvent(match, scoringPlayer, match.getAwayTeam(), goalEventType, minute);
-        }
+        Player scoringPlayer = getRandomPlayer(team);
+        match.setGoalsHome(match.getGoalsHome() + 1);
+        return new MatchEvent(match, scoringPlayer, team, goalEventType, minute);
+
     }
 
     private Player getRandomPlayer(Team team) {
@@ -153,5 +154,19 @@ public class MatchServiceImpl implements MatchService {
         int randomIndex = random.nextInt(players.size());
         return players.get(randomIndex);
     }
-    
+
+    private Team selectTeam(Match match) {
+        Team team = new Team();
+        Random random = new Random();
+        int totalQuality = match.getHomeTeam().getQuality() + match.getAwayTeam().getQuality();
+        int randomQuality = random.nextInt(totalQuality);
+
+        if (randomQuality < match.getHomeTeam().getQuality()) {
+            team = match.getHomeTeam();
+        } else {
+            team = match.getAwayTeam();
+        }
+        return team;
+    }
+
 }
