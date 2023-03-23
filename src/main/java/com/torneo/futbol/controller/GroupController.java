@@ -1,7 +1,6 @@
 
 package com.torneo.futbol.controller;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
