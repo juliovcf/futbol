@@ -58,8 +58,8 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Match simulateMatch(Team homeTeam, Team awayTeam, Match match) {
-        Logger.info("Comienza el partido entre " + homeTeam.getName() + " y " + awayTeam.getName());
+    public Match simulateMatch(Match match) {
+        Logger.info("Comienza el partido entre " + match.getHomeTeam() + " y " + match.getAwayTeam());
         List<MatchEvent> events = new ArrayList<>();
         // Simular las dos partes del partido
         Logger.info("Simulando la primera parte");
@@ -68,7 +68,7 @@ public class MatchServiceImpl implements MatchService {
         events.addAll(simulateHalf(match));
         
         Logger.info("Fin del partido");
-        Logger.info("Resultado: " + homeTeam.getName() + " " + match.getGoalsHome() + " - " + match.getGoalsAway() + " " + awayTeam.getName());
+        Logger.info("Resultado: " + match.getHomeTeam() + " " + match.getGoalsHome() + " - " + match.getGoalsAway() + " " + match.getAwayTeam());
         // Guardar el resultado en la base de datos
         // saveMatchResult(match);
 

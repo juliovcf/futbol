@@ -20,6 +20,6 @@ public interface MatchService {
 
     List<Match> findByDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 
-    Match simulateMatch(Team homeTeam, Team awayTeam, Match match);
+    Match simulateMatch(Match match);
 
 }
