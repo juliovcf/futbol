@@ -37,13 +37,16 @@ public class Player {
     @Column(length = 2)
     private Integer number;
 
-    @Column(length = 3)
+    @Column(length = 3, nullable = false, columnDefinition = "int default 0")
     private Integer goals;
 
-    @Column(length = 3)
+    @Column(length = 3, nullable = false, columnDefinition = "int default 0")
     private Integer yellowCards;
 
-    @Column(length = 3)
+    @Column(length = 3, nullable = false, columnDefinition = "int default 0")
     private Integer redCards;
+
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    private boolean available;
 
 }
