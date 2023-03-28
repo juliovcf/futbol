@@ -128,7 +128,7 @@ public class MatchServiceImpl implements MatchService {
             Logger.info("Gol de falta directa para " + team + "en el minuto " + minute);
             return generateGoalEvent(match, minute, team);
         } else{
-            Logger.info("Falta sin consecuencias para " + team + "en el minuto " + minute);
+            Logger.info("Falta sin consecuencias para " + team);
             return null;
         }
     }
@@ -162,13 +162,14 @@ public class MatchServiceImpl implements MatchService {
         Logger.info("Corner para " + team + "en el minuto " + minute);
         int randomEvent = random.nextInt(100);
         if (randomEvent < 10) { // 10% de probabilidad de gol en corner
-            Logger.info("Gol en corner para " + team + "en el minuto " + minute);
+            Logger.info("Gol en corner para " + team);
             return generateGoalEvent(match, minute, team);
         } else if (randomEvent < 20) { // 10% de probabilidad de tarjeta amarilla en corner
-            Logger.info("Tarjeta amarilla en corner para " + team + "en el minuto " + minute);
+            Logger.info("Corner de nuevo para " + team);
             return generateCornerEvent(match, minute, team);
         }
-        else return null;
+        Logger.info("Corner sin consecuencias para " + team + "en el minuto " + minute);
+        return null;
     }
 
     private MatchEvent generateGoalEvent(Match match, int minute, Team team) {
@@ -179,6 +180,7 @@ public class MatchServiceImpl implements MatchService {
         } else {
             match.setGoalsAway(match.getGoalsAway() + 1);
         }
+        scoringPlayer.setGoals(scoringPlayer.getGoals() + 1);
         return new MatchEvent(match, scoringPlayer, team, goalEventType, minute);
     }
 
