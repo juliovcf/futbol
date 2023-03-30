@@ -2,6 +2,7 @@ package com.torneo.futbol.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,10 +29,15 @@ public class Match {
     @ManyToOne
     private Team homeTeam;
 
+    @Column(columnDefinition = "integer default 0")
     private Integer goalsHome;
 
     @ManyToOne
     private Team awayTeam;
 
+    @Column(columnDefinition = "integer default 0")
     private Integer goalsAway;
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean played;
 }
