@@ -114,10 +114,19 @@ public class MatchServiceImpl implements MatchService {
                 events.add(event);
                 j = event.getMinute();
                 j += 2;
+                sleep(10000);
             }
         }
 
         return events;
+    }
+
+    private void sleep(int i) {
+        try {
+            Thread.sleep(i);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private MatchEvent generateRandomEvent(Match match, int minute) {
@@ -127,9 +136,11 @@ public class MatchServiceImpl implements MatchService {
         // Probabilidad de eventos (ajustar según preferencia)
         if (randomEvent < 10) { // 10 de probabilidad de falta
             Logger.info("Falta " + "en el minuto " + minute + " para " + team.getName());
+            sleep(5000);
             return generateFoulEvent(match, minute + 2, team);
-        } else if (randomEvent < 30) { // 20% de probabilidad de ocasion de gol
+        } else if (randomEvent < 25) { // 15% de probabilidad de ocasion de gol
             Logger.info("Ocasion de gol para " + team.getName() + " en el minuto " + minute);
+            sleep(5000);
             return generateOcasionEvent(match, minute + 1, team);
         } else {
             return null; // Nada ocurre en esta iteración
@@ -142,10 +153,11 @@ public class MatchServiceImpl implements MatchService {
         // Probabilidad de eventos (ajustar según preferencia)
         if (randomEvent < 20) { // 20% de probabilidad de corner
             return generateCornerEvent(match, minute + 3, team);
-        } else if (randomEvent < 35) { // 15% de probabilidad de ocasion de gol
+        } else if (randomEvent < 40) { // 20% de probabilidad de ocasion de gol
             return generateGoalEvent(match, minute + 1, team);
         } else {
             Logger.info("Ocasión fallada");
+            sleep(5000);
             return null; // Nada ocurre en esta iteración
         }
     }
@@ -155,12 +167,14 @@ public class MatchServiceImpl implements MatchService {
         int randomEvent = random.nextInt(100);
         if (randomEvent < 5) { // 5% de probabilidad de que sea un penalti
             Logger.info("Penalti para " + team.getName() + " en el minuto " + minute);
+            sleep(10000);
             return generatePenalEvent(match, minute, team);
         } else if (randomEvent < 15) { // 10% de probabilidad de gol de falta directa
             Logger.info("Gol de falta directa para " + team.getName() + " en el minuto " + minute);
             return generateGoalEvent(match, minute, team);
         } else{
             Logger.info("Falta sin consecuencias para " + team.getName());
+            sleep(5000);
             return null;
         }
     }
@@ -184,6 +198,7 @@ public class MatchServiceImpl implements MatchService {
             return generateGoalEvent(match, minute, team);
         } else if (randomEvent < 20) { // 20% de probabilidad de fallar el penalti
             Logger.info("Penalti fallado por " + team.getName() + "en el minuto " + minute);
+            sleep(5000);
             return generateCornerEvent(match, minute, team);
         }
         else return null;

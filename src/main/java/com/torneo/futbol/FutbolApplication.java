@@ -15,8 +15,8 @@ public class FutbolApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FutbolApplication.class, args);
 
-		Team team1 = new Team(null, "Argentina", 80);
-		Team team2 = new Team(null, "Brasil", 80);
+		Team team1 = new Team(null, "Valencia CF", 80);
+		Team team2 = new Team(null, "Real Madrid", 80);
 		/*Player player1 = new Player(null, team1, "Messi", "null", null, 10, 0, 0, 0, true);
 		Player player2 = new Player(null, team1, "Kun", "null", null, 10, 0, 0, 0, true);
 		Player player3 = new Player(null, team2, "Neymar", "null", null, 10, 0, 0, 0, true);
