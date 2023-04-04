@@ -41,6 +41,9 @@ public class Match {
     @Column(columnDefinition = "boolean default false")
     private boolean played;
 
-    @Column
+    @Column(columnDefinition = "boolean default false")
+    private boolean isEliminatory;
+
+    @ManyToOne
     private Team winner;
 }

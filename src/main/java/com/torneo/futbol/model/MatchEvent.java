@@ -37,12 +37,4 @@ public class MatchEvent {
     @Column(name = "minute", nullable = false)
     private Integer minute;
 
-    public MatchEvent(Match match, Player player, Team team, MatchEventType eventType, Integer minute) {
-        this.match = match;
-        this.player = player;
-        this.team = team;
-        this.eventType = eventType;
-        this.minute = minute;
-    }
-
 }
