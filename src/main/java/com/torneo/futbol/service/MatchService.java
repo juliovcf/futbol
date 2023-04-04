@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.torneo.futbol.model.Match;
-import com.torneo.futbol.model.Team;
 
 public interface MatchService {
 

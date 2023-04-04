@@ -2,9 +2,11 @@ package com.torneo.futbol.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.torneo.futbol.config.Logger;
 import com.torneo.futbol.dao.MatchDao;
@@ -15,9 +17,6 @@ import com.torneo.futbol.model.MatchEventType;
 import com.torneo.futbol.model.Player;
 import com.torneo.futbol.model.Team;
 import com.torneo.futbol.service.MatchService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class MatchServiceImpl implements MatchService {
@@ -269,13 +268,13 @@ public class MatchServiceImpl implements MatchService {
     
         for (int i = 0; i < maxRounds; i++) {
             // Simula el penalti del equipo local
-            if (random.nextInt(100) < homeTeam.getQuality()) {
+            if (random.nextInt(100) < homeTeam.getQuality()-10) {
                 homeTeamScore++;
                 Logger.info("Gol de penalti para " + homeTeam.getName() + ", " + homeTeamScore + " - " + awayTeamScore);
             }
     
             // Simula el penalti del equipo visitante
-            if (random.nextInt(100) < awayTeam.getQuality()) {
+            if (random.nextInt(100) < awayTeam.getQuality()-10) {
                 awayTeamScore++;
                 Logger.info("Gol de penalti para " + awayTeam.getName() + ", " + homeTeamScore + " - " + awayTeamScore);
             }
@@ -285,12 +284,12 @@ public class MatchServiceImpl implements MatchService {
         while (homeTeamScore == awayTeamScore) {
             Logger.info("Empate en penaltis, se continúa con la muerte súbita");
             // Simula el penalti del equipo local
-            if (random.nextInt(100) < homeTeam.getQuality()) {
+            if (random.nextInt(100) < homeTeam.getQuality()-10) {
                 homeTeamScore++;
                 Logger.info("Gol de penalti para " + homeTeam.getName() + ", " + homeTeamScore + " - " + awayTeamScore);
             } else {
                 // Si el equipo visitante anota, gana
-                if (random.nextInt(100) < awayTeam.getQuality()) {
+                if (random.nextInt(100) < awayTeam.getQuality()-10) {
                     awayTeamScore++;
                     Logger.info("Gol de penalti para " + awayTeam.getName() + ", " + homeTeamScore + " - " + awayTeamScore);
                     break;
@@ -298,12 +297,12 @@ public class MatchServiceImpl implements MatchService {
             }
     
             // Simula el penalti del equipo visitante
-            if (random.nextInt(100) < awayTeam.getQuality()) {
+            if (random.nextInt(100) < awayTeam.getQuality()-10) {
                 awayTeamScore++;
                 Logger.info("Gol de penalti para " + awayTeam.getName() + ", " + homeTeamScore + " - " + awayTeamScore);
             } else {
                 // Si el equipo local anota, gana
-                if (random.nextInt(100) < homeTeam.getQuality()) {
+                if (random.nextInt(100) < homeTeam.getQuality()-10) {
                     homeTeamScore++;
                     Logger.info("Gol de penalti para " + homeTeam.getName() + ", " + homeTeamScore + " - " + awayTeamScore);
                     break;

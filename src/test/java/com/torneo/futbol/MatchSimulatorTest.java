@@ -1,5 +1,9 @@
 package com.torneo.futbol;
 
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -11,10 +15,6 @@ import com.torneo.futbol.model.Team;
 import com.torneo.futbol.repository.MatchEventRepository;
 import com.torneo.futbol.repository.TeamRepository;
 import com.torneo.futbol.service.MatchService;
-
-import static org.mockito.Mockito.when;
-
-import java.util.Optional;
 
 class MatchSimulatorTest {
 
@@ -37,7 +37,7 @@ class MatchSimulatorTest {
         // Preparar datos de prueba
         Team team1 = new Team(1L, "Team 1", 50);
         Team team2 = new Team(2L, "Team 2", 50);
-        Match match = new Match(1L, null, team1, 0, team2, 0, false);
+        Match match = new Match(1L, null, team1, 0, team2, 0, false, null);
 
         // Configurar comportamiento de los objetos mock
         when(teamRepository.findById(1L)).thenReturn(Optional.of(team1));

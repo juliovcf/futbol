@@ -40,4 +40,7 @@ public class Match {
 
     @Column(columnDefinition = "boolean default false")
     private boolean played;
+
+    @Column
+    private Team winner;
 }
