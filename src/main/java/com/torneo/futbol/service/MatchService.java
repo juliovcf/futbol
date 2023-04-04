@@ -20,6 +20,6 @@ public interface MatchService {
 
     List<Match> findByDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 
-    Match simulateMatch(Match match);
+    Match simulateMatch(Match match, boolean isEliminatory);
 
 }

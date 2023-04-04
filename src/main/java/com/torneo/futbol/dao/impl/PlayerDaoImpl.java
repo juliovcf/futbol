@@ -1,5 +1,6 @@
 package com.torneo.futbol.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +46,14 @@ public class PlayerDaoImpl implements PlayerDao {
 
     @Override
     public List<Player> findPlayersByTeam(Team team) {
-        return playerRepository.findByTeam(team);
+        List<Player> players = playerRepository.findByTeam(team);
+    
+        if (players == null) {
+            players = new ArrayList<>();
+        }
+    
+        return players;
     }
+    
 
 }

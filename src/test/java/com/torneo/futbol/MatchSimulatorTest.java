@@ -37,7 +37,7 @@ class MatchSimulatorTest {
         // Preparar datos de prueba
         Team team1 = new Team(1L, "Team 1", 50);
         Team team2 = new Team(2L, "Team 2", 50);
-        Match match = new Match(1L, null, team1, 0, team2, 0);
+        Match match = new Match(1L, null, team1, 0, team2, 0, false);
 
         // Configurar comportamiento de los objetos mock
         when(teamRepository.findById(1L)).thenReturn(Optional.of(team1));
@@ -46,7 +46,7 @@ class MatchSimulatorTest {
         Logger.info("Hola, esto es una prueba");
 
         // Llamar al método que se está probando
-        matchSimulator.simulateMatch(match);
+        matchSimulator.simulateMatch(match, true);
 
         match.getGoalsAway();
 
