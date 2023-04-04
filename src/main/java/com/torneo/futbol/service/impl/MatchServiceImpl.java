@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.torneo.futbol.config.Logger;
 import com.torneo.futbol.dao.MatchDao;
+import com.torneo.futbol.dao.MatchEventDao;
 import com.torneo.futbol.dao.PlayerDao;
 import com.torneo.futbol.model.Match;
 import com.torneo.futbol.model.MatchEvent;
@@ -26,6 +27,9 @@ public class MatchServiceImpl implements MatchService {
 
     @Autowired
     private PlayerDao playerDao;
+
+    @Autowired
+    private MatchEventDao matchEventDao;
 
     @Override
     public Match create(Match match) {
@@ -58,7 +62,7 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Match simulateMatch(Match match, boolean isEliminatory) {
+    public Match simulateMatch(Match match) {
         Team homeTeam = match.getHomeTeam();
         Team awayTeam = match.getAwayTeam();
         Team winner = null;
@@ -71,14 +75,14 @@ public class MatchServiceImpl implements MatchService {
         events.addAll(simulateHalf(match, 45, 90));
 
         // Simular la prorroga si es necesario
-        if (isEliminatory && match.getGoalsHome() == match.getGoalsAway()) {
+        if (match.isEliminatory() && match.getGoalsHome() == match.getGoalsAway()) {
             Logger.info("Simulando la primera parte de la prorroga");
             events.addAll(simulateHalf(match, 90, 105));
             Logger.info("Simulando la segunda parte de la prorroga");
             events.addAll(simulateHalf(match, 105, 120));
 
             // Simular los penaltis si es necesario
-            if (isEliminatory && match.getGoalsHome() == match.getGoalsAway()) {
+            if (match.isEliminatory() && match.getGoalsHome() == match.getGoalsAway()) {
                 Logger.info("Simulando los penaltis");
                 winner = simulatePenalties(homeTeam, awayTeam);
             }
@@ -220,7 +224,7 @@ public class MatchServiceImpl implements MatchService {
 
     private MatchEvent generateGoalEvent(Match match, int minute, Team team) {
         MatchEventType goalEventType = null;// Obtener el MatchEventType correspondiente a un gol;
-        //Player scoringPlayer = getRandomPlayer(team);
+        Player scoringPlayer = getRandomPlayer(team);
         if (team.equals(match.getHomeTeam())) {
             match.setGoalsHome(match.getGoalsHome() + 1);
             Logger.info("Gol de " + match.getHomeTeam().getName() + " en el minuto " + minute);
@@ -228,11 +232,11 @@ public class MatchServiceImpl implements MatchService {
             match.setGoalsAway(match.getGoalsAway() + 1);
             Logger.info("Gol de " + match.getAwayTeam().getName() + " en el minuto " + minute);
         }
-        /*if(scoringPlayer != null){
+        if(scoringPlayer != null){
             scoringPlayer.setGoals(scoringPlayer.getGoals() + 1);
-        }*/
+        }
         Logger.info("Resultado: " + match.getGoalsHome() + " - " + match.getGoalsAway());
-        return new MatchEvent(match, null, team, goalEventType, minute);
+        return matchEventDao.create(new MatchEvent(null, match, scoringPlayer, team, goalEventType, minute));
     }
 
     private Player getRandomPlayer(Team team) {

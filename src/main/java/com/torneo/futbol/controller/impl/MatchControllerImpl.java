@@ -41,4 +41,20 @@ public class MatchControllerImpl implements MatchController {
     public ResponseEntity<Match> create(Match match) {
         return ResponseEntity.ok(matchService.create(match));
     }
+
+    @Override
+    public ResponseEntity<String> simulateMatch(Long matchId) {
+        Match match = matchService.findById(matchId);
+
+        if (match == null) {
+            return ResponseEntity.badRequest().body("Match not found");
+        }
+
+        if (match.isPlayed()) {
+            return ResponseEntity.badRequest().body("Match already played");
+        }
+
+        matchService.simulateMatch(match);
+        return ResponseEntity.ok("Match simulated successfully");
+    }
 }

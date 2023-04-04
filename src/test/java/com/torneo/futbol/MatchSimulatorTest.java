@@ -46,7 +46,7 @@ class MatchSimulatorTest {
         Logger.info("Hola, esto es una prueba");
 
         // Llamar al método que se está probando
-        matchSimulator.simulateMatch(match, true);
+        matchSimulator.simulateMatch(match);
 
         match.getGoalsAway();
 
