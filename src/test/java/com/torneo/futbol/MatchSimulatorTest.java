@@ -13,13 +13,13 @@ import com.torneo.futbol.config.Logger;
 import com.torneo.futbol.model.Match;
 import com.torneo.futbol.model.Team;
 import com.torneo.futbol.repository.MatchEventRepository;
-import com.torneo.futbol.repository.TeamRepository;
 import com.torneo.futbol.service.MatchService;
+import com.torneo.futbol.service.TeamService;
 
 class MatchSimulatorTest {
 
     @Mock
-    private TeamRepository teamRepository;
+    private TeamService teamService;
 
     @Mock
     private MatchEventRepository matchEventRepository;
@@ -35,13 +35,15 @@ class MatchSimulatorTest {
     @Test
     void testSimulateMatch() {
         // Preparar datos de prueba
-        Team team1 = new Team(1L, "Team 1", 50);
-        Team team2 = new Team(2L, "Team 2", 50);
+        Team team1 = new Team(1L, "Team 1", 50, 1);
+        Team team2 = new Team(2L, "Team 2", 50, 1);
+        teamService.create(team1);
+        teamService.create(team2);
         Match match = new Match(1L, null, team1, 0, team2, 0, false, false, null);
 
         // Configurar comportamiento de los objetos mock
-        when(teamRepository.findById(1L)).thenReturn(Optional.of(team1));
-        when(teamRepository.findById(2L)).thenReturn(Optional.of(team2));
+        when(teamService.findById(1L)).thenReturn(Optional.of(team1));
+        when(teamService.findById(2L)).thenReturn(Optional.of(team2));
 
         Logger.info("Hola, esto es una prueba");
 

@@ -17,6 +17,7 @@ import com.torneo.futbol.model.MatchEvent;
 import com.torneo.futbol.model.MatchEventType;
 import com.torneo.futbol.model.Player;
 import com.torneo.futbol.model.Team;
+import com.torneo.futbol.repository.MatchEventTypeRepository;
 import com.torneo.futbol.service.MatchService;
 
 @Service
@@ -30,6 +31,9 @@ public class MatchServiceImpl implements MatchService {
 
     @Autowired
     private MatchEventDao matchEventDao;
+
+    @Autowired
+    private MatchEventTypeRepository matchEventTypeRepository;
 
     @Override
     public Match create(Match match) {
@@ -117,7 +121,7 @@ public class MatchServiceImpl implements MatchService {
                 events.add(event);
                 j = event.getMinute();
                 j += 2;
-                sleep(10000);
+                //sleep(10000);
             }
         }
 
@@ -139,11 +143,11 @@ public class MatchServiceImpl implements MatchService {
         // Probabilidad de eventos (ajustar según preferencia)
         if (randomEvent < 10) { // 10 de probabilidad de falta
             Logger.info("Falta " + "en el minuto " + minute + " para " + team.getName());
-            sleep(5000);
+            //sleep(5000);
             return generateFoulEvent(match, minute + 2, team);
         } else if (randomEvent < 25) { // 15% de probabilidad de ocasion de gol
             Logger.info("Ocasion de gol para " + team.getName() + " en el minuto " + minute);
-            sleep(5000);
+            //sleep(5000);
             return generateOcasionEvent(match, minute + 1, team);
         } else {
             return null; // Nada ocurre en esta iteración
@@ -160,7 +164,7 @@ public class MatchServiceImpl implements MatchService {
             return generateGoalEvent(match, minute + 1, team);
         } else {
             Logger.info("Ocasión fallada");
-            sleep(5000);
+            //sleep(5000);
             return null; // Nada ocurre en esta iteración
         }
     }
@@ -170,14 +174,14 @@ public class MatchServiceImpl implements MatchService {
         int randomEvent = random.nextInt(100);
         if (randomEvent < 5) { // 5% de probabilidad de que sea un penalti
             Logger.info("Penalti para " + team.getName() + " en el minuto " + minute);
-            sleep(10000);
+            //sleep(10000);
             return generatePenalEvent(match, minute, team);
         } else if (randomEvent < 15) { // 10% de probabilidad de gol de falta directa
             Logger.info("Gol de falta directa para " + team.getName() + " en el minuto " + minute);
             return generateGoalEvent(match, minute, team);
         } else{
             Logger.info("Falta sin consecuencias para " + team.getName());
-            sleep(5000);
+            //sleep(5000);
             return null;
         }
     }
@@ -201,7 +205,7 @@ public class MatchServiceImpl implements MatchService {
             return generateGoalEvent(match, minute, team);
         } else if (randomEvent < 20) { // 20% de probabilidad de fallar el penalti
             Logger.info("Penalti fallado por " + team.getName() + "en el minuto " + minute);
-            sleep(5000);
+            //sleep(5000);
             return generateCornerEvent(match, minute, team);
         }
         else return null;
@@ -223,7 +227,7 @@ public class MatchServiceImpl implements MatchService {
     }
 
     private MatchEvent generateGoalEvent(Match match, int minute, Team team) {
-        MatchEventType goalEventType = null;// Obtener el MatchEventType correspondiente a un gol;
+        MatchEventType matchEventType = matchEventTypeRepository.findById(1L).orElse(null);
         Player scoringPlayer = getRandomPlayer(team);
         if (team.equals(match.getHomeTeam())) {
             match.setGoalsHome(match.getGoalsHome() + 1);
@@ -236,7 +240,7 @@ public class MatchServiceImpl implements MatchService {
             scoringPlayer.setGoals(scoringPlayer.getGoals() + 1);
         }
         Logger.info("Resultado: " + match.getGoalsHome() + " - " + match.getGoalsAway());
-        return matchEventDao.create(new MatchEvent(null, match, scoringPlayer, team, goalEventType, minute));
+        return matchEventDao.create(new MatchEvent(null, match, scoringPlayer, team, matchEventType, minute));
     }
 
     private Player getRandomPlayer(Team team) {

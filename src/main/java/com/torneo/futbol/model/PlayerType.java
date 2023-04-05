@@ -7,27 +7,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Data
+@NoArgsConstructor
 @Table
-public class Team {
+public class PlayerType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Short id;
 
-    @Column(nullable = false, length = 25)
-    private String name;
-
-    @Column(nullable = false, length = 3)
-    private Integer quality;
-
-    @Column(length = 1, name = "team_group")
-    private Integer team_group;
-
+    @Column(name = "position", nullable = false)
+    private String position;
+    
 }
