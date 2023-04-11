@@ -2,7 +2,6 @@ package com.torneo.futbol.controller;
 
 import java.util.List;
 
-import com.torneo.futbol.dto.PlayerDTO;
 import com.torneo.futbol.model.Player;
 
 import org.springframework.http.ResponseEntity;
@@ -27,7 +26,7 @@ public interface PlayerController {
     ResponseEntity<List<Player>> findPlayersByTeam(@PathVariable("teamId") Long teamId);
 
     @PostMapping
-    ResponseEntity<Player> add(@RequestBody PlayerDTO player);
+    ResponseEntity<Player> add(@RequestBody Player player);
 
     @PutMapping(value = "/{id}")
     ResponseEntity<Player> update(@PathVariable(required = true) Long id, @RequestBody Player player);

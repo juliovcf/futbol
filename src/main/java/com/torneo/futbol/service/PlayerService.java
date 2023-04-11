@@ -2,7 +2,6 @@ package com.torneo.futbol.service;
 
 import java.util.List;
 
-import com.torneo.futbol.dto.PlayerDTO;
 import com.torneo.futbol.model.Player;
 
 public interface PlayerService {
@@ -11,7 +10,7 @@ public interface PlayerService {
 
     Player getById(Long id);
 
-    Player create(PlayerDTO PlayerDTO);
+    Player create(Player player);
 
     Player update(Long id, Player player);
 

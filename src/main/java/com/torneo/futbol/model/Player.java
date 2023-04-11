@@ -32,7 +32,8 @@ public class Player {
     @Column(nullable = false)
     private String surname;
 
-    private String position;
+    @ManyToOne(optional = true)
+    private PlayerType position;
 
     @Column(length = 2)
     private Integer number;
