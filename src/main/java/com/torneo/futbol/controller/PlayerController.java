@@ -23,7 +23,7 @@ public interface PlayerController {
     ResponseEntity<Player> getById(@PathVariable(required = true) Long id);
 
     @GetMapping("/teams/{teamId}")
-    ResponseEntity<List<Player>> findPlayersByTeam(@PathVariable("teamId") Long teamId);
+    ResponseEntity<List<Player>> findPlayersByTeam(@PathVariable Long teamId);
 
     @PostMapping
     ResponseEntity<Player> add(@RequestBody Player player);
