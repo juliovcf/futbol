@@ -2,15 +2,15 @@ package com.torneo.futbol.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.torneo.futbol.dao.PlayerDao;
 import com.torneo.futbol.dto.PlayerDTO;
 import com.torneo.futbol.model.Player;
 import com.torneo.futbol.model.Team;
 import com.torneo.futbol.service.PlayerService;
 import com.torneo.futbol.service.TeamService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class PlayerServiceImpl implements PlayerService {

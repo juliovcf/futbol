@@ -2,9 +2,11 @@ package com.torneo.futbol.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.torneo.futbol.config.Logger;
 import com.torneo.futbol.dao.MatchDao;
@@ -15,9 +17,6 @@ import com.torneo.futbol.model.MatchEventType;
 import com.torneo.futbol.model.Player;
 import com.torneo.futbol.model.Team;
 import com.torneo.futbol.service.MatchService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class MatchServiceImpl implements MatchService {

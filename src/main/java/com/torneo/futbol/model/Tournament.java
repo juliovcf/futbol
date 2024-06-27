@@ -10,14 +10,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
 @Entity
-@Table(name = "\"group\"")
-public class Group {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Tournament {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,12 +27,14 @@ public class Group {
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id")
-    private List<Team> teams;
+    private Integer year;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id")
-    private List<Match> matches;
+    @JoinColumn(name = "tournament_id")
+    private List<Group> groups;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "tournament_id")
+    private List<Match> eliminationMatches;
 
 }
