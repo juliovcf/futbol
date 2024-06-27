@@ -18,7 +18,7 @@ public class MatchEventType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Short id;
 
     @Column(name = "name", nullable = false)
     private String name;

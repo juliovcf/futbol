@@ -53,7 +53,7 @@ public class Player {
     @Column(length = 3, nullable = false, columnDefinition = "int default 0")
     private Integer redCards;
 
-    @Column(nullable = false, columnDefinition = "boolean default true")
+    @Column(columnDefinition = "boolean default true")
     private boolean available;
 
 }

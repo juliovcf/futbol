@@ -27,6 +27,6 @@ public interface TeamController {
     void addTeam(@ApiParam(required = true) @RequestBody Team team);
 
     @DeleteMapping("/{id}")
-    void deleteTeam(@ApiParam(required = true) @PathVariable(value = "id") Long id);
+    void deleteTeam(@ApiParam(required = true) @PathVariable Long id);
 
 }

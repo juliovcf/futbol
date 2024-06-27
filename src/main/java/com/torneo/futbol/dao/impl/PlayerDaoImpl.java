@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.torneo.futbol.dao.PlayerDao;
 import com.torneo.futbol.model.Player;
 import com.torneo.futbol.model.Team;
 import com.torneo.futbol.repository.PlayerRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 @Repository
 public class PlayerDaoImpl implements PlayerDao {
@@ -46,14 +46,10 @@ public class PlayerDaoImpl implements PlayerDao {
 
     @Override
     public List<Player> findPlayersByTeam(Team team) {
-        List<Player> players = playerRepository.findByTeam(team);
-    
-        if (players == null) {
-            players = new ArrayList<>();
-        }
-    
-        return players;
+        return Optional.ofNullable(playerRepository.findByTeam(team))
+                .orElse(new ArrayList<>());
     }
+
     
 
 }

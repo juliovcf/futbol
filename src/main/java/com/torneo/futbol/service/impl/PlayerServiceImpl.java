@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.torneo.futbol.dao.PlayerDao;
-import com.torneo.futbol.dto.PlayerDTO;
 import com.torneo.futbol.model.Player;
 import com.torneo.futbol.model.Team;
 import com.torneo.futbol.service.PlayerService;
@@ -32,20 +31,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Player create(PlayerDTO PlayerDTO) {
-        Team team = teamService.findById(PlayerDTO.getTeamId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid team ID"));
-
-        Player player = new Player();
-        player.setTeam(team);
-        player.setName(PlayerDTO.getName());
-        player.setSurname(PlayerDTO.getSurname());
-        player.setPosition(PlayerDTO.getPosition());
-        player.setNumber(PlayerDTO.getNumber());
-        player.setGoals(PlayerDTO.getGoals());
-        player.setYellowCards(PlayerDTO.getYellowCards());
-        player.setRedCards(PlayerDTO.getRedCards());
-
+    public Player create(Player player) {
         return playerDao.create(player);
     }
 

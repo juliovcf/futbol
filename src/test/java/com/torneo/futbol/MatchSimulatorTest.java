@@ -17,13 +17,13 @@ import com.torneo.futbol.model.Player;
 import com.torneo.futbol.model.Position;
 import com.torneo.futbol.model.Team;
 import com.torneo.futbol.repository.MatchEventRepository;
-import com.torneo.futbol.repository.TeamRepository;
 import com.torneo.futbol.service.MatchService;
+import com.torneo.futbol.service.TeamService;
 
 class MatchSimulatorTest {
 
     @Mock
-    private TeamRepository teamRepository;
+    private TeamService teamService;
 
     @Mock
     private MatchEventRepository matchEventRepository;
@@ -53,14 +53,14 @@ class MatchSimulatorTest {
         Team team1 = createTeam("Team 1", players1);
         Team team2 = createTeam("Team 2", players2);
 
-        Match match = new Match(1L, null, team1, 0, team2, 0, false);
+        Match match = new Match(1L, null, team1, 0, team2, 0, false, false, null);
 
         // Configurar comportamiento de los objetos mock
-        when(teamRepository.findById(1L)).thenReturn(Optional.of(team1));
-        when(teamRepository.findById(2L)).thenReturn(Optional.of(team2));
+        when(teamService.findById(1L)).thenReturn(Optional.of(team1));
+        when(teamService.findById(2L)).thenReturn(Optional.of(team2));
 
         // Llamar al método que se está probando
-        matchSimulator.simulateMatch(match, true);
+        matchSimulator.simulateMatch(match);
 
         // Verificar el comportamiento y/o los resultados esperados
         assertTrue(match.getGoalsHome() >= 0);
