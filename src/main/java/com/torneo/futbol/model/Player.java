@@ -2,6 +2,8 @@ package com.torneo.futbol.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,8 +34,12 @@ public class Player {
     @Column(nullable = false)
     private String surname;
 
-    @ManyToOne(optional = true)
-    private PlayerType position;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Position position;
+
+    @Column(nullable = false)
+    private Integer quality;
 
     @Column(length = 2)
     private Integer number;
