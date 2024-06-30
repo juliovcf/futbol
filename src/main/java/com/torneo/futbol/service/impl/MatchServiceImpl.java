@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.torneo.futbol.config.Logger;
@@ -15,6 +14,7 @@ import com.torneo.futbol.dao.PlayerDao;
 import com.torneo.futbol.model.Match;
 import com.torneo.futbol.model.MatchEvent;
 import com.torneo.futbol.model.MatchEventType;
+import com.torneo.futbol.model.Phase;
 import com.torneo.futbol.model.Player;
 import com.torneo.futbol.model.Team;
 import com.torneo.futbol.repository.MatchEventTypeRepository;
@@ -23,17 +23,23 @@ import com.torneo.futbol.service.MatchService;
 @Service
 public class MatchServiceImpl implements MatchService {
 
-    @Autowired
-    private MatchDao matchDao;
+    private final MatchDao matchDao;
+    private final PlayerDao playerDao;
+    private final MatchEventDao matchEventDao;
+    private final MatchEventTypeRepository matchEventTypeRepository;
+    private final Random random;
 
-    @Autowired
-    private PlayerDao playerDao;
+    private int currentMinute;
+    private Integer sleep;
 
-    @Autowired
-    private MatchEventDao matchEventDao;
-
-    @Autowired
-    private MatchEventTypeRepository matchEventTypeRepository;
+    public MatchServiceImpl(MatchDao matchDao, PlayerDao playerDao, MatchEventDao matchEventDao,
+                            MatchEventTypeRepository matchEventTypeRepository) {
+        this.matchDao = matchDao;
+        this.playerDao = playerDao;
+        this.matchEventDao = matchEventDao;
+        this.matchEventTypeRepository = matchEventTypeRepository;
+        this.random = new Random();
+    }
 
     @Override
     public Match create(Match match) {
@@ -66,192 +72,161 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Match simulateMatch(Match match) {
+    public Match simulateMatch(Match match, Integer delay) {
         Team homeTeam = match.getHomeTeam();
         Team awayTeam = match.getAwayTeam();
         Team winner = null;
-        Logger.info("Comienza el partido entre " + homeTeam + " y " + awayTeam);
+        sleep = delay;
+
+        Logger.info("Comienza el partido entre " + homeTeam.getName() + " y " + awayTeam.getName());
         List<MatchEvent> events = new ArrayList<>();
-        // Simular las dos partes del partido
-        Logger.info("Simulando la primera parte");
         events.addAll(simulateHalf(match, 0, 45));
-        Logger.info("Simulando la segunda parte");
         events.addAll(simulateHalf(match, 45, 90));
 
-        // Simular la prorroga si es necesario
-        if (match.isEliminatory() && match.getGoalsHome() == match.getGoalsAway()) {
-            Logger.info("Simulando la primera parte de la prorroga");
+        if (match.isEliminatory() && match.getGoalsHome().equals(match.getGoalsAway())) {
             events.addAll(simulateHalf(match, 90, 105));
-            Logger.info("Simulando la segunda parte de la prorroga");
             events.addAll(simulateHalf(match, 105, 120));
-
-            // Simular los penaltis si es necesario
-            if (match.isEliminatory() && match.getGoalsHome() == match.getGoalsAway()) {
-                Logger.info("Simulando los penaltis");
+            if (match.getGoalsHome().equals(match.getGoalsAway())) {
                 winner = simulatePenalties(homeTeam, awayTeam);
             }
         }
 
-        // Asignar el ganador
         if (winner == null) {
-            if (match.getGoalsHome() > match.getGoalsAway()) {
-                winner = homeTeam;
-            } else if (match.getGoalsHome() < match.getGoalsAway()) {
-                winner = awayTeam;
-            }
+            winner = (match.getGoalsHome() > match.getGoalsAway()) ? homeTeam : awayTeam;
         }
 
-        Logger.info("Fin del partido");
-        Logger.info("Resultado: " + match.getHomeTeam().getName() + " " + match.getGoalsHome() + " - "
-                + match.getGoalsAway() + " " + match.getAwayTeam().getName());
-        // Guardar el resultado en la base de datos
-        // saveMatchResult(match);
-
-        Logger.info("Eventos del partido" + events);
+        Logger.info("Fin del partido. Resultado: " + homeTeam.getName() + " " + match.getGoalsHome() + " - "
+                + match.getGoalsAway() + " " + awayTeam.getName());
+        Logger.info("Eventos del partido: " + events);
 
         return match;
     }
 
     private List<MatchEvent> simulateHalf(Match match, int minIni, int minFin) {
         List<MatchEvent> events = new ArrayList<>();
-
-        for (int j = minIni; j < minFin; j++) {
-            MatchEvent event = generateRandomEvent(match, j);
-            if (event != null) {
-                events.add(event);
-                j = event.getMinute();
-                j += 2;
-                // sleep(10000);
+        for (currentMinute = minIni; currentMinute < minFin; currentMinute++) {
+            Phase phase = determinePhase(match);
+            switch (phase) {
+                case ATTACK_HOME -> events.addAll(simulateAttack(match, match.getHomeTeam()));
+                case ATTACK_AWAY -> events.addAll(simulateAttack(match, match.getAwayTeam()));
+                case DISPUTE -> Logger.info("El balón está en disputa en el minuto " + currentMinute);
+                default -> Logger.info("El balón está en disputa en el minuto " + currentMinute);
             }
+            wait(sleep);
         }
-
         return events;
     }
 
-    /*
-     * private void sleep(int i) {
-     * try {
-     * Thread.sleep(i);
-     * } catch (InterruptedException e) {
-     * e.printStackTrace();
-     * }
-     * }
-     */
+    private Phase determinePhase(Match match) {
+        int chance = random.nextInt(100);
+        int midfieldQualityHome = match.getHomeTeam().getMidfieldQuality();
+        int midfieldQualityAway = match.getAwayTeam().getMidfieldQuality();
+        int totalMidfieldQuality = midfieldQualityHome + midfieldQualityAway;
 
-    private MatchEvent generateRandomEvent(Match match, int minute) {
-        Random random = new Random();
-        int randomEvent = random.nextInt(100);
-        Team team = selectTeam(match);
-        // Probabilidad de eventos (ajustar según preferencia)
-        if (randomEvent < 10) { // 10 de probabilidad de falta
-            Logger.info("Falta " + "en el minuto " + minute + " para " + team.getName());
-            // sleep(5000);
-            return generateFoulEvent(match, minute + 2, team);
-        } else if (randomEvent < 25) { // 15% de probabilidad de ocasion de gol
-            Logger.info("Ocasion de gol para " + team.getName() + " en el minuto " + minute);
-            // sleep(5000);
-            return generateOcasionEvent(match, minute + 1, team);
-        } else {
-            return null; // Nada ocurre en esta iteración
+        if (chance < 50) {
+            return Phase.DISPUTE;
         }
+
+        int threshold = (int) (100.0 * midfieldQualityHome / totalMidfieldQuality);
+        return (chance < threshold) ? Phase.ATTACK_HOME : Phase.ATTACK_AWAY;
     }
 
-    private MatchEvent generateOcasionEvent(Match match, int minute, Team team) {
-        Random random = new Random();
-        int randomEvent = random.nextInt(100);
-        // Probabilidad de eventos (ajustar según preferencia)
-        if (randomEvent < 20) { // 20% de probabilidad de corner
-            return generateCornerEvent(match, minute + 3, team);
-        } else if (randomEvent < 40) { // 20% de probabilidad de ocasion de gol
-            return generateGoalEvent(match, minute + 1, team);
+    private List<MatchEvent> simulateAttack(Match match, Team attackingTeam) {
+        List<MatchEvent> events = new ArrayList<>();
+        Team defendingTeam = (attackingTeam.equals(match.getHomeTeam())) ? match.getAwayTeam() : match.getHomeTeam();
+        Logger.info(attackingTeam.getName() + " está atacando en el minuto " + currentMinute);
+
+        int attackQuality = attackingTeam.getAttackQuality();
+        int defenseQuality = defendingTeam.getDefenseQuality();
+        int totalQuality = attackQuality + defenseQuality;
+        int chance = random.nextInt(100);
+
+        if (chance < (40 * attackQuality / totalQuality)) {
+            Logger.info("El ataque continúa");
+            events.addAll(simulateAttack(match, attackingTeam));
+        } else if (chance < 50) {
+            Logger.info("¡Gol de " + attackingTeam.getName() + "! en el minuto " + currentMinute);
+            currentMinute += 2;
+            events.add(generateGoalEvent(match, attackingTeam));
+        } else if (chance < 60) {
+            Logger.info("Falta cometida contra " + attackingTeam.getName());
+            events.add(generateFoulEvent(match, attackingTeam));
+        } else if (chance < 70) {
+            Logger.info("Corner para " + attackingTeam.getName());
+            events.add(generateCornerEvent(match, attackingTeam));
         } else {
-            Logger.info("Ocasión fallada");
-            // sleep(5000);
-            return null; // Nada ocurre en esta iteración
+            Logger.info("El balón vuelve a estar en disputa");
         }
+        return events;
     }
 
-    private MatchEvent generateFoulEvent(Match match, int minute, Team team) {
-        Random random = new Random();
+    private MatchEvent generateFoulEvent(Match match, Team team) {
         int randomEvent = random.nextInt(100);
-        if (randomEvent < 5) { // 5% de probabilidad de que sea un penalti
-            Logger.info("Penalti para " + team.getName() + " en el minuto " + minute);
-            // sleep(10000);
-            return generatePenalEvent(match, minute, team);
-        } else if (randomEvent < 15) { // 10% de probabilidad de gol de falta directa
-            Logger.info("Gol de falta directa para " + team.getName() + " en el minuto " + minute);
-            return generateGoalEvent(match, minute, team);
+        if (randomEvent < 5) {
+            Logger.info("Penalti para " + team.getName() + " en el minuto " + currentMinute);
+            return generatePenalEvent(match, team);
+        } else if (randomEvent < 15) {
+            Logger.info("Gol de falta directa para " + team.getName() + " en el minuto " + currentMinute);
+            return generateGoalEvent(match, team);
         } else {
             Logger.info("Falta sin consecuencias para " + team.getName());
-            // sleep(5000);
+            wait(sleep);
             return null;
         }
     }
-    // How to generate random events in a football match
-    /*
-     * private MatchEvent generateInjuryEvent(Match match, int minute, Team team) {
-     * return null;
-     * }
-     * 
-     * private MatchEvent generateRedCardEvent(Match match, int minute, Team team) {
-     * return null;
-     * }
-     * 
-     * private MatchEvent generateYellowCardEvent(Match match, int minute, Team
-     * team) {
-     * return null;
-     * }
-     */
 
-    private MatchEvent generatePenalEvent(Match match, int minute, Team team) {
-        Random random = new Random();
+    private MatchEvent generatePenalEvent(Match match, Team team) {
         int randomEvent = random.nextInt(100);
-        if (randomEvent < 80) { // 80% de probabilidad de gol en penalti
-            return generateGoalEvent(match, minute, team);
-        } else if (randomEvent < 20) { // 20% de probabilidad de fallar el penalti
-            Logger.info("Penalti fallado por " + team.getName() + "en el minuto " + minute);
-            // sleep(5000);
-            return generateCornerEvent(match, minute, team);
-        } else
-            return null;
+        if (randomEvent < 80) {
+            return generateGoalEvent(match, team);
+        } else {
+            Logger.info("Penalti fallado por " + team.getName() + " en el minuto " + currentMinute);
+            wait(sleep);
+            return generateCornerEvent(match, team);
+        }
     }
 
-    private MatchEvent generateCornerEvent(Match match, int minute, Team team) {
-        Random random = new Random();
-        Logger.info("Corner para " + team.getName() + "en el minuto " + minute);
-        int randomEvent = random.nextInt(100);
-        if (randomEvent < 10) { // 10% de probabilidad de gol en corner
+    private MatchEvent generateCornerEvent(Match match, Team team) {
+        Team defendingTeam = team.equals(match.getHomeTeam()) ? match.getAwayTeam() : match.getHomeTeam();
+        int attackQuality = team.getAttackQuality();
+        int defenseQuality = defendingTeam.getDefenseQuality();
+        int totalQuality = attackQuality + defenseQuality;
+
+        Logger.info("Corner para " + team.getName() + " en el minuto " + currentMinute);
+        int chance = random.nextInt(100);
+        if (chance < (10 * attackQuality / totalQuality)) {
             Logger.info("Gol en corner para " + team.getName());
-            return generateGoalEvent(match, minute, team);
-        } else if (randomEvent < 20) { // 10% de probabilidad de tarjeta amarilla en corner
+            wait(sleep);
+            return generateGoalEvent(match, team);
+        } else if (chance < (20 * attackQuality / totalQuality)) {
             Logger.info("Corner de nuevo para " + team.getName());
-            return generateCornerEvent(match, minute, team);
+            wait(sleep);
+            return generateCornerEvent(match, team);
+        } else {
+            Logger.info("Corner sin consecuencias para " + team.getName());
+            return null;
         }
-        Logger.info("Corner sin consecuencias para " + team.getName() + "en el minuto " + minute);
-        return null;
     }
 
-    private MatchEvent generateGoalEvent(Match match, int minute, Team team) {
+    private MatchEvent generateGoalEvent(Match match, Team team) {
         MatchEventType matchEventType = matchEventTypeRepository.findById(1L).orElse(null);
         Player scoringPlayer = getRandomPlayer(team);
         if (team.equals(match.getHomeTeam())) {
             match.setGoalsHome(match.getGoalsHome() + 1);
-            Logger.info("Gol de " + match.getHomeTeam().getName() + " en el minuto " + minute);
+            Logger.info("Gol de " + match.getHomeTeam().getName() + " en el minuto " + currentMinute);
         } else {
             match.setGoalsAway(match.getGoalsAway() + 1);
-            Logger.info("Gol de " + match.getAwayTeam().getName() + " en el minuto " + minute);
+            Logger.info("Gol de " + match.getAwayTeam().getName() + " en el minuto " + currentMinute);
         }
         if (scoringPlayer != null) {
             scoringPlayer.setGoals(scoringPlayer.getGoals() + 1);
         }
         Logger.info("Resultado: " + match.getGoalsHome() + " - " + match.getGoalsAway());
-        return matchEventDao.create(new MatchEvent(null, match, scoringPlayer, team, matchEventType, minute));
+        return matchEventDao.create(new MatchEvent(null, match, scoringPlayer, team, matchEventType, currentMinute));
     }
 
     private Player getRandomPlayer(Team team) {
-        Random random = new Random();
-        List<Player> players = new ArrayList<>();
-        players = playerDao.findPlayersByTeam(team);
+        List<Player> players = playerDao.findPlayersByTeam(team);
         if (players.isEmpty()) {
             return null;
         }
@@ -259,69 +234,39 @@ public class MatchServiceImpl implements MatchService {
         return players.get(randomIndex);
     }
 
-    private Team selectTeam(Match match) {
-        Team team = new Team();
-        Random random = new Random();
-        int totalQuality = match.getHomeTeam().getQuality() + match.getAwayTeam().getQuality();
-        int randomQuality = random.nextInt(totalQuality);
-
-        if (randomQuality < match.getHomeTeam().getQuality()) {
-            team = match.getHomeTeam();
-        } else {
-            team = match.getAwayTeam();
-        }
-        return team;
-    }
-
     private Team simulatePenalties(Team homeTeam, Team awayTeam) {
         int homeTeamScore = 0;
         int awayTeamScore = 0;
         int maxRounds = 5;
-        Random random = new Random();
 
         for (int i = 0; i < maxRounds; i++) {
-            // Simula el penalti del equipo local
             if (random.nextInt(100) < homeTeam.getQuality() - 10) {
                 homeTeamScore++;
                 Logger.info("Gol de penalti para " + homeTeam.getName() + ", " + homeTeamScore + " - " + awayTeamScore);
             }
-
-            // Simula el penalti del equipo visitante
             if (random.nextInt(100) < awayTeam.getQuality() - 10) {
                 awayTeamScore++;
                 Logger.info("Gol de penalti para " + awayTeam.getName() + ", " + homeTeamScore + " - " + awayTeamScore);
             }
         }
 
-        // Si hay empate después de 5 rondas, se continúa con la muerte súbita
         while (homeTeamScore == awayTeamScore) {
             Logger.info("Empate en penaltis, se continúa con la muerte súbita");
-            // Simula el penalti del equipo local
             if (random.nextInt(100) < homeTeam.getQuality() - 10) {
                 homeTeamScore++;
                 Logger.info("Gol de penalti para " + homeTeam.getName() + ", " + homeTeamScore + " - " + awayTeamScore);
-            } else {
-                // Si el equipo visitante anota, gana
-                if (random.nextInt(100) < awayTeam.getQuality() - 10) {
-                    awayTeamScore++;
-                    Logger.info(
-                            "Gol de penalti para " + awayTeam.getName() + ", " + homeTeamScore + " - " + awayTeamScore);
-                    break;
-                }
+            } else if (random.nextInt(100) < awayTeam.getQuality() - 10) {
+                awayTeamScore++;
+                Logger.info("Gol de penalti para " + awayTeam.getName() + ", " + homeTeamScore + " - " + awayTeamScore);
+                break;
             }
-
-            // Simula el penalti del equipo visitante
             if (random.nextInt(100) < awayTeam.getQuality() - 10) {
                 awayTeamScore++;
                 Logger.info("Gol de penalti para " + awayTeam.getName() + ", " + homeTeamScore + " - " + awayTeamScore);
-            } else {
-                // Si el equipo local anota, gana
-                if (random.nextInt(100) < homeTeam.getQuality() - 10) {
-                    homeTeamScore++;
-                    Logger.info(
-                            "Gol de penalti para " + homeTeam.getName() + ", " + homeTeamScore + " - " + awayTeamScore);
-                    break;
-                }
+            } else if (random.nextInt(100) < homeTeam.getQuality() - 10) {
+                homeTeamScore++;
+                Logger.info("Gol de penalti para " + homeTeam.getName() + ", " + homeTeamScore + " - " + awayTeamScore);
+                break;
             }
         }
 
@@ -330,4 +275,11 @@ public class MatchServiceImpl implements MatchService {
         return winner;
     }
 
+    private void wait(int i) {
+        try {
+            Thread.sleep(i);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
 }

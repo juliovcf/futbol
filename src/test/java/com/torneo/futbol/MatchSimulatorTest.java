@@ -60,7 +60,7 @@ class MatchSimulatorTest {
         when(teamService.findById(2L)).thenReturn(Optional.of(team2));
 
         // Llamar al método que se está probando
-        matchSimulator.simulateMatch(match);
+        matchSimulator.simulateMatch(match, 1000);
 
         // Verificar el comportamiento y/o los resultados esperados
         assertTrue(match.getGoalsHome() >= 0);

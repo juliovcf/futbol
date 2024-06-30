@@ -3,13 +3,13 @@ package com.torneo.futbol.controller.impl;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.torneo.futbol.controller.MatchController;
-import com.torneo.futbol.model.Match;
-import com.torneo.futbol.service.MatchService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.torneo.futbol.controller.MatchController;
+import com.torneo.futbol.model.Match;
+import com.torneo.futbol.service.MatchService;
 
 @RestController
 public class MatchControllerImpl implements MatchController {
@@ -43,7 +43,7 @@ public class MatchControllerImpl implements MatchController {
     }
 
     @Override
-    public ResponseEntity<String> simulateMatch(Long matchId) {
+    public ResponseEntity<String> simulateMatch(Long matchId, Integer sleep) {
         Match match = matchService.findById(matchId);
 
         if (match == null) {
@@ -54,7 +54,7 @@ public class MatchControllerImpl implements MatchController {
             return ResponseEntity.badRequest().body("Match already played");
         }
 
-        matchService.simulateMatch(match);
+        matchService.simulateMatch(match, sleep);
         return ResponseEntity.ok("Match simulated successfully");
     }
 }
